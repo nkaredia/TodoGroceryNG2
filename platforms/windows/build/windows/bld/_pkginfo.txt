@@ -1,0 +1,1 @@
+D:\workspace\personal\in\TodoGroceryNG2\platforms\windows\AppPackages\CordovaApp.Windows10_0.0.1.0_anycpu_debug_Test\CordovaApp.Windows10_0.0.1.0_anycpu_debug.appx

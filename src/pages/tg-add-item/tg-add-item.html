@@ -9,5 +9,38 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <button ion-button (click)="dissmiss()">Close</button>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label floating>Item Name</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="quantity-select-row">
+      <ion-col width-50>
+        <ion-item>
+          <ion-label floating>Quantity</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col width-50>
+        <ion-item>
+          <ion-label>Unit</ion-label>
+          <ion-select [(ngModel)]="unit">
+            <ion-option value="pack">Pack</ion-option>
+            <ion-option value="litre">Litre</ion-option>
+            <ion-option value="kilos">Kilos</ion-option>
+            <ion-option value="gallon">Gallon</ion-option>
+            <ion-option value="pounds">Pounds</ion-option>
+            <ion-option value="snes">SNES</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row margin-top>
+      <button margin-top ion-button full color="primary">Add</button>
+    </ion-row>
+  </ion-grid>
 </ion-content>
