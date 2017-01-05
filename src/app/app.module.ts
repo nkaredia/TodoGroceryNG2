@@ -5,6 +5,7 @@ import { HomePage } from '../pages/home/home';
 import { TgPopoverPage } from '../pages/tg-popover/tg-popover';
 import { TgMenuPage } from '../pages/tg-menu/tg-menu';
 import { TgAddItemPage } from '../pages/tg-add-item/tg-add-item';
+import { TgAddListPage } from '../pages/tg-add-list/tg-add-list';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { TgAddItemPage } from '../pages/tg-add-item/tg-add-item';
     HomePage,
     TgPopoverPage,
     TgMenuPage,
-    TgAddItemPage
+    TgAddItemPage,
+    TgAddListPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -23,7 +25,8 @@ import { TgAddItemPage } from '../pages/tg-add-item/tg-add-item';
     HomePage,
     TgPopoverPage,
     TgMenuPage,
-    TgAddItemPage
+    TgAddItemPage,
+    TgAddListPage
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

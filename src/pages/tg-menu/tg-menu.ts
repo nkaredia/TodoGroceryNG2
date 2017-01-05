@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
-import { ActionSheetController, ModalController, ViewController } from 'ionic-angular';
-
+import { ActionSheetController, ModalController, AlertController } from 'ionic-angular';
+import { TgAddListPage } from '../tg-add-list/tg-add-list';
 
 @Component({
   selector: 'page-tg-menu',
-  templateUrl: 'tg-menu.html'
+  templateUrl: 'tg-menu.html',
+  providers: [TgAddListPage]
 })
 export class TgMenuPage {
 
-  constructor(private actionCtrl: ActionSheetController, private modalCtrl: ModalController) {
+  lists: Array<string> = [];
+  isListsItemUpdating: boolean = false;
 
+  constructor(private actionCtrl: ActionSheetController, private modalCtrl: ModalController, private alertCtrl: AlertController) {
+    this.lists.push('Untitled List');
   }
 
   ionViewDidLoad() {
@@ -43,28 +47,41 @@ export class TgMenuPage {
     actionSheet.present();
   }
 
-  presentModal() {
-    let modal = this.modalCtrl.create(AddList);
-    modal.present();
+  addNewList() {
+    this.openListPrompt('Add new list', 'Add');
   }
 
-}
-
-
-
-@Component({
-  template: `
-    Hello World
-  `
-})
-class AddList {
-  constructor(private viewCtrl: ViewController) {
+  updateList() {
 
   }
 
-  dissmiss() {
-    this.viewCtrl.dismiss();
+  openListPrompt(title: string, action: string) {
+    let prompt = this.alertCtrl.create({
+      title: title,
+      inputs: [
+        {
+          name: 'listName',
+          placeholder: 'List name'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+
+          }
+        },
+        {
+          text: action,
+          handler: this.newListHandler
+        }
+      ]
+    });
+    prompt.present();
   }
 
-
+  private newListHandler = (data: {listName: string}) => {
+    console.log(data);
+    this.lists.push(data.listName);
+  }
 }
