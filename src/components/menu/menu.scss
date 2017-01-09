@@ -1,0 +1,24 @@
+tg-menu {
+  .bottom-footer {
+    padding: 0;
+    .toolbar-content {
+      height: 56px;
+      button {
+        height: 100%;
+        margin: 0;
+        ion-icon {
+          font-size: 2em;
+        }
+      }
+    }
+  }
+  ion-content {
+    .tg-list-item {
+      ion-icon {
+        font-size: 2rem;
+        color: #999999;
+        min-height: 1.6rem;
+      }
+    }
+  }
+}

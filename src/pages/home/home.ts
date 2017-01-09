@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
-import { TgPopoverPage } from '../tg-popover/tg-popover';
-import { TgAddItemPage } from '../tg-add-item/tg-add-item';
+import { Popover } from '../../components/popover/popover';
+import { AddItem } from '../../components/addItem/addItem';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [TgPopoverPage, TgAddItemPage]
+  providers: [Popover, AddItem]
 })
 export class HomePage {
 
   constructor(public navCtrl: NavController, 
-              private popoverPage: TgPopoverPage, 
+              private popover: Popover, 
               private menuCtrl: MenuController,
-              private modalCtrl: TgAddItemPage) {
+              private modalCtrl: AddItem) {
     this.menuCtrl.enable(true);
   }
 
   presentPopover(ev: Event) {
-    this.popoverPage.presentPopover(ev);
+    this.popover.presentPopover(ev);
   }
 
   addItem(ev: Event) {

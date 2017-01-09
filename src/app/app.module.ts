@@ -2,19 +2,18 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { TgPopoverPage } from '../pages/tg-popover/tg-popover';
-import { TgMenuPage } from '../pages/tg-menu/tg-menu';
-import { TgAddItemPage } from '../pages/tg-add-item/tg-add-item';
-import { TgAddListPage } from '../pages/tg-add-list/tg-add-list';
+import { Menu } from '../components/menu/menu';
+import { TgDataFactory } from '../providers/tg-data-factory';
+import { Popover } from '../components/popover/popover';
+import { AddItem } from '../components/addItem/addItem';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    TgPopoverPage,
-    TgMenuPage,
-    TgAddItemPage,
-    TgAddListPage
+    Menu,
+    Popover,
+    AddItem
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -23,11 +22,9 @@ import { TgAddListPage } from '../pages/tg-add-list/tg-add-list';
   entryComponents: [
     MyApp,
     HomePage,
-    TgPopoverPage,
-    TgMenuPage,
-    TgAddItemPage,
-    TgAddListPage
+    Popover,
+    AddItem
   ],
-  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [TgDataFactory, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule { }

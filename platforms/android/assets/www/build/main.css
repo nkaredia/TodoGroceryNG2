@@ -22109,39 +22109,45 @@ sub {
   }
 }
 
-page-tg-add-item .quantity-select-row ion-col:last-child ion-item {
+tg-add-item .quantity-select-row ion-col:last-child ion-item {
   height: 100% !important;
 }
 
-page-tg-add-item .quantity-select-row ion-col:last-child ion-item ion-label {
+tg-add-item .quantity-select-row ion-col:last-child ion-item ion-label {
   margin: 0px 8px 8px 0px;
 }
 
-page-tg-add-item .quantity-select-row ion-col:last-child ion-item ion-select {
+tg-add-item .quantity-select-row ion-col:last-child ion-item ion-select {
   padding: 0px 8px 8px 0px;
   max-width: 60%;
 }
 
-page-tg-add-item .quantity-select-row ion-col:last-child ion-item .input-wrapper {
+tg-add-item .quantity-select-row ion-col:last-child ion-item .input-wrapper {
   -webkit-align-items: flex-end !important;
   -ms-flex-align: end !important;
   -ms-grid-row-align: flex-end !important;
   align-items: flex-end !important;
 }
 
-page-tg-menu .bottom-footer {
+tg-menu .bottom-footer {
   padding: 0;
 }
 
-page-tg-menu .bottom-footer .toolbar-content {
+tg-menu .bottom-footer .toolbar-content {
   height: 56px;
 }
 
-page-tg-menu .bottom-footer .toolbar-content button {
+tg-menu .bottom-footer .toolbar-content button {
   height: 100%;
   margin: 0;
 }
 
-page-tg-menu .bottom-footer .toolbar-content button ion-icon {
+tg-menu .bottom-footer .toolbar-content button ion-icon {
   font-size: 2em;
+}
+
+tg-menu ion-content .tg-list-item ion-icon {
+  font-size: 2rem;
+  color: #999999;
+  min-height: 1.6rem;
 }
