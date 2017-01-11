@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable'
+import { Subscriber } from 'rxjs/Subscriber';
 import 'rxjs/add/operator/map';
 
 /*
@@ -11,52 +13,20 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class TgDataFactory {
 
-  private Lists: Array<Array<Item>>;
+  private lists: Array<List> = [];
 
   constructor(public http: Http) {
     console.log('Hello TgDataFactory Provider');
   }
 
-  getCachedLists = (): Array<Array<Item>> => {
-    return this.Lists;
+  getLists = (): Observable<List> => {
+    return new Observable<List>((subscriber: Subscriber<List>) => {
+      let lists = window.localStorage.getItem('Lists');
+      if (lists) {
+        subscriber.next(JSON.parse(lists));
+      } else {
+        subscriber.error('Error getting data');
+      }
+    });
   }
-
-  getRefreshedLists = (): Array<Array<Item>> => {
-    this.Lists = JSON.parse(window.localStorage.getItem('Lists'));
-    return this.Lists;
-  }
-
-}
-
-
-class Item {
-
-  constructor() {
-    this.itemName = '';
-  }
-
-  set itemName(item: string) {
-    this.itemName = item;
-  }
-
-  get itemName(): string {
-    return this.itemName;
-  }
-
-  set itemQuantity(item: string) {
-    this.itemQuantity = item;
-  }
-
-  get itemQuantity(): string {
-    return this.itemQuantity;
-  }
-
-  set itemUnit(item: string) {
-    this.itemUnit = item;
-  }
-
-  get itemUnit(): string {
-    return this.itemUnit;
-  }
-
 }

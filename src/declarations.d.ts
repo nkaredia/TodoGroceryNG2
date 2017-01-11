@@ -12,3 +12,23 @@
   https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html
 */
 declare module '*';
+
+interface List {
+  name: string;
+}
+
+interface ListItem {
+  listName: string;
+  name: string;
+  quantity: number;
+  unit: UNIT
+}
+
+declare enum UNIT {
+  pack,
+  litre,
+  gallon,
+  kilogram,
+  pound,
+  dozen
+}

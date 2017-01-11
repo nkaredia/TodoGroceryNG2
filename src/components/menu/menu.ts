@@ -1,17 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActionSheetController, ModalController, AlertController } from 'ionic-angular';
+import { TgDataFactory } from '../../providers/tg-data-factory';
 
 @Component({
   selector: 'tg-menu',
   templateUrl: 'menu.html'
 })
-export class Menu {
+export class Menu implements OnInit {
 
-  lists: Array<string> = [];
+  @Input() lists: Array<List> = [];
+  @Output() listChange: EventEmitter<List> = new EventEmitter();
   isListsItemUpdating: boolean = false;
 
-  constructor(private actionCtrl: ActionSheetController, private modalCtrl: ModalController, private alertCtrl: AlertController) {
-    this.lists.push('Untitled List');
+  constructor(private actionCtrl: ActionSheetController, private modalCtrl: ModalController, private alertCtrl: AlertController, private factory: TgDataFactory) {
+    this.lists.push({ name: 'Untitles list' });
+    for (let item of this.lists) {
+
+    }
+  }
+
+  ngOnInit() {
+    this.factory.getLists().subscribe((value) => {
+      console.log('--nk--', value)
+    }, (error) => {
+      console.log('--nk--', error)
+    }, () => {
+      return;
+    });
   }
 
   ionViewDidLoad() {
@@ -53,6 +68,11 @@ export class Menu {
 
   }
 
+  changeList(list: List) {
+    console.log('--nk', list);
+    this.listChange.next(list);
+  }
+
   openListPrompt(title: string, action: string) {
     let prompt = this.alertCtrl.create({
       title: title,
@@ -80,6 +100,6 @@ export class Menu {
 
   private newListHandler = (data: { listName: string }) => {
     console.log(data);
-    this.lists.push(data.listName);
+    this.lists.push({ name: data.listName });
   }
 }

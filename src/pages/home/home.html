@@ -15,6 +15,7 @@
 </ion-header>
 <ion-content #popoverContent padding class="popover-page">
   <div #popoverText class="text-to-change">
+    {{list}}
   </div>
   <ion-fab right bottom>
     <button color="primary" ion-fab (click)="addItem($event)"><ion-icon name="add"></ion-icon></button>

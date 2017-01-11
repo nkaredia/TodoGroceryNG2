@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 import { Popover } from '../../components/popover/popover';
 import { AddItem } from '../../components/addItem/addItem';
@@ -9,6 +9,8 @@ import { AddItem } from '../../components/addItem/addItem';
   providers: [Popover, AddItem]
 })
 export class HomePage {
+
+  @Input() list: List
 
   constructor(public navCtrl: NavController, 
               private popover: Popover, 
