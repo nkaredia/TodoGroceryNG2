@@ -13,7 +13,10 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content #popoverContent padding class="popover-page">
+<ion-menu [content]="content">
+  <tg-menu (onChange)="changeCurrentList($event)"></tg-menu>
+</ion-menu>
+<ion-content #popoverContent #content padding class="popover-page">
   <div #popoverText class="text-to-change">
     {{list}}
   </div>

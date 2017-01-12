@@ -1,6 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, Directive } from '@angular/core';
 import { ActionSheetController, ModalController, AlertController } from 'ionic-angular';
 import { TgDataFactory } from '../../providers/tg-data-factory';
+import 'rxjs';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
 
 @Component({
   selector: 'tg-menu',
@@ -8,15 +12,13 @@ import { TgDataFactory } from '../../providers/tg-data-factory';
 })
 export class Menu implements OnInit {
 
-  @Input() lists: Array<List> = [];
-  @Output() listChange: EventEmitter<List> = new EventEmitter();
-  isListsItemUpdating: boolean = false;
+  @Output() onChange: EventEmitter<List> = new EventEmitter<List>();
 
+
+  private lists: Array<List> = [];
   constructor(private actionCtrl: ActionSheetController, private modalCtrl: ModalController, private alertCtrl: AlertController, private factory: TgDataFactory) {
     this.lists.push({ name: 'Untitles list' });
-    for (let item of this.lists) {
-
-    }
+    console.log(this);
   }
 
   ngOnInit() {
@@ -27,13 +29,15 @@ export class Menu implements OnInit {
     }, () => {
       return;
     });
+
+
   }
 
-  ionViewDidLoad() {
+  private ionViewDidLoad() {
     console.log('ionViewDidLoad TgMenuPage');
   }
 
-  presentActionSheet() {
+  private presentActionSheet() {
     let actionSheet = this.actionCtrl.create({
       title: 'Modify your album',
       buttons: [
@@ -60,7 +64,7 @@ export class Menu implements OnInit {
     actionSheet.present();
   }
 
-  addNewList() {
+  private addNewList() {
     this.openListPrompt('Add new list', 'Add');
   }
 
@@ -68,12 +72,12 @@ export class Menu implements OnInit {
 
   }
 
-  changeList(list: List) {
-    console.log('--nk', list);
-    this.listChange.next(list);
+  private changeList(list: List) {
+    console.log('--nk from menu', list);
+    this.onChange.emit(list);
   }
 
-  openListPrompt(title: string, action: string) {
+  private openListPrompt(title: string, action: string) {
     let prompt = this.alertCtrl.create({
       title: title,
       inputs: [
