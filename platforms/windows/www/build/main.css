@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /*!
   Ionicons, v3.0.0-alpha.3
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -22107,4 +22107,47 @@ sub {
   .wp .modal-wrapper > .ion-page > ion-header > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
     padding-top: calc(16px + 20px);
   }
+}
+
+tg-add-item .quantity-select-row ion-col:last-child ion-item {
+  height: 100% !important;
+}
+
+tg-add-item .quantity-select-row ion-col:last-child ion-item ion-label {
+  margin: 0px 8px 8px 0px;
+}
+
+tg-add-item .quantity-select-row ion-col:last-child ion-item ion-select {
+  padding: 0px 8px 8px 0px;
+  max-width: 60%;
+}
+
+tg-add-item .quantity-select-row ion-col:last-child ion-item .input-wrapper {
+  -webkit-align-items: flex-end !important;
+  -ms-flex-align: end !important;
+  -ms-grid-row-align: flex-end !important;
+  align-items: flex-end !important;
+}
+
+tg-menu .bottom-footer {
+  padding: 0;
+}
+
+tg-menu .bottom-footer .toolbar-content {
+  height: 56px;
+}
+
+tg-menu .bottom-footer .toolbar-content button {
+  height: 100%;
+  margin: 0;
+}
+
+tg-menu .bottom-footer .toolbar-content button ion-icon {
+  font-size: 2em;
+}
+
+tg-menu ion-content .tg-list-item ion-icon {
+  font-size: 2rem;
+  color: #999999;
+  min-height: 1.6rem;
 }

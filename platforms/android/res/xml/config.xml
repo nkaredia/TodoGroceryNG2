@@ -12,6 +12,9 @@
         <param name="android-package" value="tomloprod.HeaderColor" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="SQLitePlugin">
+        <param name="android-package" value="io.sqlc.SQLitePlugin" />
+    </feature>
     <name>TodoGrocery</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
