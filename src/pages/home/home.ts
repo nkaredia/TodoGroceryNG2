@@ -4,6 +4,7 @@ import { Popover } from '../../components/popover/popover';
 import { AddItem } from '../../components/addItem/addItem';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
+import { TgDataFactory } from '../../providers/tg-data-factory';
 import 'rxjs';
 
 @Component({
@@ -14,12 +15,15 @@ import 'rxjs';
 export class HomePage implements OnInit {
 
   currentList: List;
+  listItems: Array<ListItem>;
 
   constructor(public navCtrl: NavController,
     private popover: Popover,
     private menuCtrl: MenuController,
-    private modalCtrl: AddItem) {
+    private modalCtrl: AddItem,
+    private factory: TgDataFactory) {
     this.menuCtrl.enable(true);
+    this.listItems = [];
   }
 
   ngOnInit() {
@@ -30,6 +34,14 @@ export class HomePage implements OnInit {
     // }, () => {
 
     // })
+    this.factory.getListItems().subscribe(value => {
+      console.log('from home', value);
+      this.listItems = value;
+    }, error => {
+      console.log(error);
+    }, () => {
+
+    })
 
   }
 

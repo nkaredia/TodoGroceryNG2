@@ -1,3 +1,23 @@
 page-home {
-
+  .scroll-content {
+    padding: 0 !important;
+    ion-list {
+      ion-item-sliding {
+        button.item {
+          min-height: 3.1em;
+          padding-left: 0px;
+          .item-inner {
+            padding-left: 16px;
+            padding-right: 16px;
+          }
+        }
+        ion-item-options {
+          button {
+            margin: 0 !important;
+            height: 100% !important;
+          }
+        }
+      }
+    }
+  }
 }

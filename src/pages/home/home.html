@@ -18,7 +18,19 @@
 </ion-menu>
 <ion-content #popoverContent #content padding class="popover-page">
   <div #popoverText class="text-to-change">
-    {{list}}
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of listItems">
+        <button ion-item>
+          {{item.name}}
+        </button>
+        <ion-item-options side="right">
+          <button ion-button color="secondary">
+        <ion-icon name="call"></ion-icon>
+        Call
+      </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
   </div>
   <ion-fab right bottom>
     <button color="primary" ion-fab (click)="addItem($event)"><ion-icon name="add"></ion-icon></button>
