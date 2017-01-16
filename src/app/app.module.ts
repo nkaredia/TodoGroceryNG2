@@ -6,6 +6,8 @@ import { Menu } from '../components/menu/menu';
 import { TgDataFactory } from '../providers/tg-data-factory';
 import { Popover } from '../components/popover/popover';
 import { AddItem } from '../components/addItem/addItem';
+import {IxDB} from '../providers/ixdb';
+import {AddList} from '../components/addlist/addlist';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,8 @@ import { AddItem } from '../components/addItem/addItem';
     HomePage,
     Menu,
     Popover,
-    AddItem
+    AddItem,
+    AddList
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -23,8 +26,9 @@ import { AddItem } from '../components/addItem/addItem';
     MyApp,
     HomePage,
     Popover,
-    AddItem
+    AddItem,
+    AddList
   ],
-  providers: [TgDataFactory, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [TgDataFactory, IxDB, { provide: ErrorHandler, useClass: IonicErrorHandler }]
 })
 export class AppModule { }

@@ -1,0 +1,29 @@
+<div class="addlist-modal-backdrop"></div>
+<div class="addlist-modal-wrapper">
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Add new list</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dissmiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item style="padding-left: 0;">
+          <ion-label floating>List Name</ion-label>
+          <ion-input type="text" [(ngModel)]="listName"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row margin-top>
+      <button margin-top ion-button full color="primary" (click)="addNewList($event)">Add</button>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+</div>
+

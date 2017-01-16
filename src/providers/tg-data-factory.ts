@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { SQLite } from 'ionic-native';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
-import Dexie from 'dexie';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
+import { IxDB } from '../providers/ixdb';
 
 /*
   Generated class for the TgDataFactory provider.
@@ -14,43 +14,41 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class TgDataFactory {
+  public currentListItems: Subject<Array<ListItem>>;
 
-  private lists: Array<List> = [];
-  private __db: Dexie;
-
-  constructor(public http: Http) {
+  constructor(public http: Http, private ixdb: IxDB) {
     console.log('Hello TgDataFactory Provider');
-    this.__db = new Dexie('todoGroceryDB', {});
-    this.__db.version(1).stores({
-      listItem: "listName, name, quantity, unit"
-    });
-    //this.__db.table('listItem').put({listName: 'Untitled list', name: 'Apple', quantity: 5, unit: 3});
+    this.currentListItems = new Subject<Array<ListItem>>();
+  }
 
+  setListItemsByName = (listName: string) => {
+    this.ixdb.getListItems(listName).subscribe(value => {
+      this.currentListItems.next(value);
+    })
   }
 
   getListItems = (): Observable<Array<ListItem>> => {
     return new Observable<Array<ListItem>>((subscriber: Subscriber<Array<List>>) => {
-      this.__db
-        .table('listItem')
-        .where('listName')
-        .equalsIgnoreCase('untitled list')
-        .toArray()
-        .then((value) => {
-          subscriber.next(value);
-        }).catch((error) => {
-          subscriber.next([]);
-        });
     });
   }
 
-  getLists = (): Observable<List> => {
-    return new Observable<List>((subscriber: Subscriber<List>) => {
-      let lists = window.localStorage.getItem('Lists');
-      if (lists) {
-        subscriber.next(JSON.parse(lists));
-      } else {
-        subscriber.error('Error getting data');
-      }
+  hasList = (name: string): Observable<boolean> => {
+    return new Observable<boolean>((subscriber: Subscriber<boolean>) => {
+      this.ixdb.getListByName(name).subscribe((value: List) => {
+        subscriber.next(value && value.name ? value.name.toLowerCase() === name.toLowerCase() : false);
+      })
     });
+  }
+
+  getLists = (): Observable<Array<List>> => {
+    return new Observable<Array<List>>((subscriber: Subscriber<Array<List>>) => {
+      this.ixdb.getAllList().subscribe((value: Array<List>) => {
+        subscriber.next(value);
+      });
+    });
+  }
+
+  addNewList = (name: string) => {
+    this.ixdb.addNewList(name);
   }
 }

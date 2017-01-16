@@ -21,7 +21,8 @@ interface ListItem {
   listName: string;
   name: string;
   quantity: number;
-  unit: UNIT
+  unit: UNIT;
+  isChecked: boolean;
 }
 
 declare enum UNIT {

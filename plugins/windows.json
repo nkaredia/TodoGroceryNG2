@@ -27,9 +27,6 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "TodoGrocery"
-        },
-        "cordova-sqlite-storage": {
-            "PACKAGE_NAME": "TodoGrocery"
         }
     },
     "dependent_plugins": {}

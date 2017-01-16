@@ -15,9 +15,6 @@
         },
         "cordova-plugin-headercolor": {
             "PACKAGE_NAME": "com.ionicframework.todogrocery247866"
-        },
-        "cordova-sqlite-storage": {
-            "PACKAGE_NAME": "com.ionicframework.todogrocery247866"
         }
     },
     "dependent_plugins": {}
