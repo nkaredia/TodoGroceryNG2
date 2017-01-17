@@ -48,14 +48,19 @@ export class Menu implements OnInit {
     this.onListAdd.subscribe((value: List) => {
       console.log(value);
       this.lists.push(value);
-      this.factory.addNewList(value.name);
+      this.factory.addNewList(value.name).then(value => {
+      })
     });
   }
 
   registerGetListSubscriber = () => {
     this.factory.getLists().subscribe((value: Array<List>) => {
-      if(value) {
+      if(value && value.length > 0) {
         this.lists = value;
+      } else {
+        this.factory.addNewList('Untitled Store').then(value => {
+          this.lists = [{name: 'Untitled Store'}];
+        })
       }
     })
   }

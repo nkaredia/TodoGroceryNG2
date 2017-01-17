@@ -49,6 +49,12 @@ export class TgDataFactory {
   }
 
   addNewList = (name: string) => {
-    this.ixdb.addNewList(name);
+    return new Promise<number>((resolve, reject) => {
+      this.ixdb.tgaddNewList(name).subscribe(value => {
+        resolve(value);
+      }, error => {
+        reject(error);
+      });
+    });
   }
 }

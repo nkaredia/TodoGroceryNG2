@@ -64,13 +64,14 @@ export class IxDB {
     });
   }
 
-  addNewList = (name: string) => {
-    if (name && name.trim().length > 0) {
-      this.__db.table<List>('LISTS').bulkAdd([
-        { name: name }
-      ]);
-    }
+  tgaddNewList = (name: string) => {
+    return new Observable<number>((subscriber: Subscriber<number>) => {
+      this.__db.table('LISTS').add({name: name}).then(value => {
+        subscriber.next(value);
+      }, error => {
+        subscriber.error(error);
+      });
+    });
   }
-
 
 }
