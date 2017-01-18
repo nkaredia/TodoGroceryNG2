@@ -22171,6 +22171,10 @@ tg-menu ion-content .tg-list-item ion-icon {
   min-height: 1.6rem;
 }
 
+tg-menu ion-content .tg-list-item.active {
+  background-color: #d1d1d1;
+}
+
 page-home .scroll-content {
   padding: 0 !important;
 }

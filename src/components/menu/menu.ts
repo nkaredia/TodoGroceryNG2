@@ -12,18 +12,21 @@ import 'rxjs';
 export class Menu implements OnInit {
 
   @Output() onChange: EventEmitter<List> = new EventEmitter<List>();
+  @Output() closeDrawer: EventEmitter<any> = new EventEmitter<any>();
+
   onListAdd: EventEmitter<{ newList: List, oldList: List }> = new EventEmitter<{ newList: List, oldList: List }>();
   onListEdit: EventEmitter<{ newList: List, oldList: List }> = new EventEmitter<{ newList: List, oldList: List }>();
 
 
   private lists: Array<List> = [];
+  private currentStore: List;
+
   constructor(private actionCtrl: ActionSheetController,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private factory: TgDataFactory,
     private addlistModal: AddList,
     private viewCtrl: ViewController) {
-    this.onChange.emit()
   }
 
   ngOnInit() {
@@ -68,12 +71,15 @@ export class Menu implements OnInit {
     this.factory.getLists().subscribe((value: Array<List>) => {
       if (value && value.length > 0) {
         this.lists = value;
+        let local = JSON.parse(window.localStorage.getItem('currentStore'));
+        this.changeList(local ? local : this.lists[0]);
       } else {
         this.factory.addNewList('Untitled Store').then(value => {
           this.lists = [{ name: 'Untitled Store' }];
-        })
+          this.changeList({ name: 'Untitled Store' });
+        });
       }
-    })
+    });
   }
 
   presentActionSheet(list: List) {
@@ -90,6 +96,7 @@ export class Menu implements OnInit {
         }, {
           text: 'Delete',
           handler: () => {
+            this.deleteList(list);
             console.log('Archive clicked');
           }
         }
@@ -125,13 +132,49 @@ export class Menu implements OnInit {
     modal.present();
   }
 
+  deleteList(list: List) {
+    let confirm = this.alertCtrl.create({
+      title: 'Delete '.concat(list.name).concat('?'),
+      message: 'Are you sure you want to delete '.concat(list.name)
+        .concat('? All items in ')
+        .concat(list.name)
+        .concat(' will be deleted.'),
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            console.log('Agree clicked');
+            this.factory.deleteListByName(list).then(value => {
+              this.lists.splice(this.lists.indexOf(list), 1);
+              this.changeList(this.lists[0]);
+            }).catch(error => {
+
+            });
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
   updateList() {
 
   }
 
-  changeList(list: List) {
+  changeList(list: List, closeDrawer?: boolean) {
     console.log('--nk from menu', list);
     this.onChange.emit(list);
+    this.currentStore = list;
+    window.localStorage.setItem('currentStore', JSON.stringify(this.currentStore));
+    if(closeDrawer) {
+      this.closeDrawer.emit(true);
+    }
   }
 
   openListPrompt(title: string, action: string) {

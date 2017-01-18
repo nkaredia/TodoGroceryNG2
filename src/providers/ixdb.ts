@@ -66,7 +66,7 @@ export class IxDB {
 
   addNewList = (name: string) => {
     return new Observable<number>((subscriber: Subscriber<number>) => {
-      this.__db.table('LISTS').add({name: name}).then(value => {
+      this.__db.table('LISTS').add({ name: name }).then(value => {
         subscriber.next(value);
       }, error => {
         subscriber.error(error);
@@ -77,12 +77,30 @@ export class IxDB {
   editListByName = (newList: List, oldList: List) => {
     return new Observable<number>((subscriber: Subscriber<number>) => {
       this.__db.table('LISTS')
-      .where('name')
-      .equals(oldList.name)
-      .modify({name: newList.name})
-      .then(value => {
-        subscriber.next(value);
-      });
+        .where('name')
+        .equals(oldList.name)
+        .modify({ name: newList.name })
+        .then(value => {
+          subscriber.next(value);
+        })
+        .catch(error => {
+          subscriber.next(error);
+        });
+    });
+  }
+
+  deleteListByName = (list: List) => {
+    return new Observable<number>((subscriber: Subscriber<number>) => {
+      this.__db.table('LISTS')
+        .where('name')
+        .equals(list.name)
+        .delete()
+        .then(value => {
+          subscriber.next(value);
+        })
+        .catch(error => {
+          subscriber.next(error);
+        });
     });
   }
 

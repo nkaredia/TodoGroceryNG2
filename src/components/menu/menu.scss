@@ -20,5 +20,8 @@ tg-menu {
         min-height: 1.6rem;
       }
     }
+    .tg-list-item.active {
+      background-color: #d1d1d1;
+    }
   }
 }

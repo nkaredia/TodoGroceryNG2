@@ -53,6 +53,10 @@ export class HomePage implements OnInit {
     // })
   }
 
+  closeMenuDrawer() {
+    this.menuCtrl.close();
+  }
+
   changeCurrentList(list: List) {
     console.log('from home with love', list);
   }

@@ -61,7 +61,25 @@ export class TgDataFactory {
   editListByName = (newList: List, oldList: List) => {
     return new Promise<number>((resolve, reject) => {
       this.ixdb.editListByName(newList, oldList).subscribe(value => {
-        resolve(value);
+        if (!isNaN(value)) {
+          resolve(value);
+        } else {
+          reject(value);
+        }
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+  deleteListByName = (list: List) => {
+    return new Promise<number>((resolve, reject) => {
+      this.ixdb.deleteListByName(list).subscribe(value => {
+        if (!isNaN(value)) {
+          resolve(value);
+        } else {
+          reject(value);
+        }
       }, error => {
         reject(error);
       });

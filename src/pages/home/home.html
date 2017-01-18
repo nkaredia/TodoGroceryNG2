@@ -14,7 +14,7 @@
   </ion-navbar>
 </ion-header>
 <ion-menu [content]="content">
-  <tg-menu (onChange)="changeCurrentList($event)"></tg-menu>
+  <tg-menu (onChange)="changeCurrentList($event)" (closeDrawer)="closeMenuDrawer()"></tg-menu>
 </ion-menu>
 <ion-content #popoverContent #content padding class="popover-page">
   <div #popoverText class="text-to-change">
