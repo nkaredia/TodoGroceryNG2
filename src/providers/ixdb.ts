@@ -64,12 +64,24 @@ export class IxDB {
     });
   }
 
-  tgaddNewList = (name: string) => {
+  addNewList = (name: string) => {
     return new Observable<number>((subscriber: Subscriber<number>) => {
       this.__db.table('LISTS').add({name: name}).then(value => {
         subscriber.next(value);
       }, error => {
         subscriber.error(error);
+      });
+    });
+  }
+
+  editListByName = (newList: List, oldList: List) => {
+    return new Observable<number>((subscriber: Subscriber<number>) => {
+      this.__db.table('LISTS')
+      .where('name')
+      .equals(oldList.name)
+      .modify({name: newList.name})
+      .then(value => {
+        subscriber.next(value);
       });
     });
   }

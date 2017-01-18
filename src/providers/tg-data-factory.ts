@@ -50,7 +50,17 @@ export class TgDataFactory {
 
   addNewList = (name: string) => {
     return new Promise<number>((resolve, reject) => {
-      this.ixdb.tgaddNewList(name).subscribe(value => {
+      this.ixdb.addNewList(name).subscribe(value => {
+        resolve(value);
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+  editListByName = (newList: List, oldList: List) => {
+    return new Promise<number>((resolve, reject) => {
+      this.ixdb.editListByName(newList, oldList).subscribe(value => {
         resolve(value);
       }, error => {
         reject(error);

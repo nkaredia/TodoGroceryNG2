@@ -12,7 +12,8 @@ import 'rxjs';
 export class Menu implements OnInit {
 
   @Output() onChange: EventEmitter<List> = new EventEmitter<List>();
-  onListAdd: EventEmitter<List> = new EventEmitter<List>();
+  onListAdd: EventEmitter<{ newList: List, oldList: List }> = new EventEmitter<{ newList: List, oldList: List }>();
+  onListEdit: EventEmitter<{ newList: List, oldList: List }> = new EventEmitter<{ newList: List, oldList: List }>();
 
 
   private lists: Array<List> = [];
@@ -22,6 +23,7 @@ export class Menu implements OnInit {
     private factory: TgDataFactory,
     private addlistModal: AddList,
     private viewCtrl: ViewController) {
+    this.onChange.emit()
   }
 
   ngOnInit() {
@@ -42,49 +44,53 @@ export class Menu implements OnInit {
   registerSubscribers = () => {
     this.registerAddListSubscriber();
     this.registerGetListSubscriber();
+    this.registerEditListSubscriber();
   }
 
   registerAddListSubscriber = () => {
-    this.onListAdd.subscribe((value: List) => {
+    this.onListAdd.subscribe((value: { newList: List, oldList: List }) => {
       console.log(value);
-      this.lists.push(value);
-      this.factory.addNewList(value.name).then(value => {
-      })
+      this.factory.addNewList(value.newList.name).then(resolve => {
+        this.lists.push(value.newList);
+      });
+    });
+  }
+
+  registerEditListSubscriber = () => {
+    this.onListEdit.subscribe((value: { newList: List, oldList: List }) => {
+      this.factory.editListByName(value.newList, value.oldList).then(resolve => {
+        this.lists[this.lists.indexOf(value.oldList)] = value.newList;
+      });
     });
   }
 
   registerGetListSubscriber = () => {
     this.factory.getLists().subscribe((value: Array<List>) => {
-      if(value && value.length > 0) {
+      if (value && value.length > 0) {
         this.lists = value;
       } else {
         this.factory.addNewList('Untitled Store').then(value => {
-          this.lists = [{name: 'Untitled Store'}];
+          this.lists = [{ name: 'Untitled Store' }];
         })
       }
     })
   }
 
-  presentActionSheet() {
+  presentActionSheet(list: List) {
     let actionSheet = this.actionCtrl.create({
-      title: 'Modify your album',
+      title: 'Modify Store',
       buttons: [
         {
-          text: 'Destructive',
-          role: 'destructive',
+          text: 'Edit',
+          role: 'edit',
           handler: () => {
+            this.editList(list);
             console.log('Destructive clicked');
           }
         }, {
-          text: 'Archive',
+          text: 'Delete',
           handler: () => {
             console.log('Archive clicked');
-          }
-        }, {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
           }
         }
       ]
@@ -93,7 +99,29 @@ export class Menu implements OnInit {
   }
 
   addNewList() {
-    let modal = this.modalCtrl.create(AddList, { emitter: this.onListAdd });
+    let params: IAddListModel = {
+      emitter: this.onListAdd,
+      type: 'add',
+      title: 'Add New Store',
+      button: 'Add',
+      placeholder: 'Store Name',
+      listName: ''
+    }
+    let modal = this.modalCtrl.create(AddList, params);
+    modal.present();
+  }
+
+  editList(list: List) {
+    let params: IAddListModel = {
+      emitter: this.onListEdit,
+      type: 'edit',
+      title: 'Edit Store',
+      button: 'Edit',
+      placeholder: 'Store Name',
+      currentList: list,
+      listName: list.name
+    }
+    let modal = this.modalCtrl.create(AddList, params);
     modal.present();
   }
 

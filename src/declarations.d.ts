@@ -33,3 +33,13 @@ declare enum UNIT {
   pound,
   dozen
 }
+
+interface IAddListModel {
+      emitter: any;
+      type: string;
+      title: string;
+      button: string;
+      placeholder: string;
+      listName: string;
+      currentList?: List;
+}
