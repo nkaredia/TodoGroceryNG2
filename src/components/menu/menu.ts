@@ -88,13 +88,15 @@ export class Menu implements OnInit {
       buttons: [
         {
           text: 'Edit',
-          role: 'edit',
+          icon: 'md-create',
           handler: () => {
             this.editList(list);
             console.log('Destructive clicked');
           }
         }, {
           text: 'Delete',
+          icon: 'trash',
+          role: 'destructive',
           handler: () => {
             this.deleteList(list);
             console.log('Archive clicked');

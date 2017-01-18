@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ModalController, ViewController } from 'ionic-angular';
+import { ViewController, NavParams } from 'ionic-angular';
+import { UNIT } from '../../globals';
 
 @Component({
   selector: 'tg-add-item',
@@ -7,15 +8,22 @@ import { ModalController, ViewController } from 'ionic-angular';
 })
 export class AddItem {
 
-  constructor(public modalCtrl: ModalController, private viewCtrl: ViewController) { }
+  currentList: List;
+  addItemModel: ListItem;
+
+  constructor(private viewCtrl: ViewController, private params: NavParams) {
+    this.currentList = params.data['currentList'];
+    this.addItemModel = {
+      listName: 'this.currentList.name',
+      name: 'abc',
+      quantity: null,
+      unit: UNIT.pack,
+      isChecked: false
+    }
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TgAddItemPage');
-  }
-
-  presentModal() {
-    let modal = this.modalCtrl.create(AddItem);
-    modal.present();
   }
 
   dissmiss() {

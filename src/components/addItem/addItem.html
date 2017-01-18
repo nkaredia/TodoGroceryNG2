@@ -14,7 +14,7 @@
       <ion-col>
         <ion-item style="padding-left: 0;">
           <ion-label floating>Item Name</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input [(ngModel)]="addItemModel.name" type="text"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -22,7 +22,7 @@
       <ion-col width-50>
         <ion-item style="padding-left: 0;">
           <ion-label floating>Quantity</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input [(ngModel)]="addItemModel.quantity" type="text"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col width-50>

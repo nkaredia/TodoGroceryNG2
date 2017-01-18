@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController } from 'ionic-angular';
+import { NavController, MenuController, ModalController } from 'ionic-angular';
 import { Popover } from '../../components/popover/popover';
 import { AddItem } from '../../components/addItem/addItem';
 import { TgDataFactory } from '../../providers/tg-data-factory';
@@ -14,13 +14,15 @@ import 'rxjs';
 export class HomePage implements OnInit {
 
   listItems: Array<ListItem>;
+  currentlist: List;
 
   constructor(public navCtrl: NavController,
     private popover: Popover,
     private menuCtrl: MenuController,
-    private modalCtrl: AddItem,
     private factory: TgDataFactory,
-    private ixdb: IxDB) {
+    private ixdb: IxDB,
+    private modalCtrl: ModalController,
+    private addItemCtrl: AddItem) {
     this.menuCtrl.enable(true);
     this.listItems = [];
     this.factory.setListItemsByName('untitled list');
@@ -59,6 +61,7 @@ export class HomePage implements OnInit {
 
   changeCurrentList(list: List) {
     console.log('from home with love', list);
+    this.currentlist = list;
   }
 
   getCurrentList = (): string[] => {
@@ -71,7 +74,8 @@ export class HomePage implements OnInit {
 
   addItem(ev: Event) {
     console.log('cliked');
-    this.modalCtrl.presentModal();
+    let modal = this.modalCtrl.create(AddItem, { currentList: this.currentlist });
+    modal.present();
   }
 
 }
