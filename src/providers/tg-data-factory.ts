@@ -27,8 +27,13 @@ export class TgDataFactory {
     })
   }
 
-  getListItems = (): Observable<Array<ListItem>> => {
+  getListItems = (listName: string): Observable<Array<ListItem>> => {
     return new Observable<Array<ListItem>>((subscriber: Subscriber<Array<List>>) => {
+      this.ixdb.getListItems(listName).subscribe(value => {
+        subscriber.next(value);
+      }, error => {
+        subscriber.error(error);
+      });
     });
   }
 
@@ -84,5 +89,19 @@ export class TgDataFactory {
         reject(error);
       });
     });
+  }
+
+  addNewListItem = (listItem: ListItem) => {
+    return new Promise<number>((resolve, reject) => {
+      this.ixdb.addNewListItem(listItem).subscribe(value => {
+        if(!isNaN(value)) {
+          resolve(value);
+        } else {
+          reject(value);
+        }
+      }, error => {
+        reject(error);
+      });
+    })
   }
 }

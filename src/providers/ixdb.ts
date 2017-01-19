@@ -104,4 +104,14 @@ export class IxDB {
     });
   }
 
+  addNewListItem = (listItem: ListItem) => {
+    return new Observable<number>((subscriber: Subscriber<number>) => {
+      this.__db.table('listItems').add(listItem).then(value => {
+        subscriber.next(value);
+      }).catch(error => {
+        subscriber.next(error);
+      });
+    });
+  }
+
 }

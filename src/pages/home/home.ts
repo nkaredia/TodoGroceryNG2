@@ -15,6 +15,7 @@ export class HomePage implements OnInit {
 
   listItems: Array<ListItem>;
   currentlist: List;
+  newItem: ListItem;
 
   constructor(public navCtrl: NavController,
     private popover: Popover,
@@ -36,14 +37,7 @@ export class HomePage implements OnInit {
     // }, () => {
 
     // })
-    this.factory.getListItems().subscribe(value => {
-      console.log('from home', value);
-      this.listItems = value;
-    }, error => {
-      console.log(error);
-    }, () => {
 
-    })
 
     this.factory.currentListItems.subscribe(value => {
       this.listItems = value;
@@ -62,6 +56,18 @@ export class HomePage implements OnInit {
   changeCurrentList(list: List) {
     console.log('from home with love', list);
     this.currentlist = list;
+    this.getAllListItems();
+  }
+
+  getAllListItems = () => {
+    this.factory.getListItems(this.currentlist.name).subscribe(value => {
+      console.log('from home', value);
+      this.listItems = value;
+    }, error => {
+      console.log(error);
+    }, () => {
+
+    });
   }
 
   getCurrentList = (): string[] => {
@@ -76,6 +82,17 @@ export class HomePage implements OnInit {
     console.log('cliked');
     let modal = this.modalCtrl.create(AddItem, { currentList: this.currentlist });
     modal.present();
+    modal.onDidDismiss(value => {
+      console.log('dissmiss', value);
+      if (value && value.addItemModel) {
+        this.newItem = value.addItemModel;
+        this.factory.addNewListItem(this.newItem).then(value => {
+          this.listItems.push(this.newItem);
+        }).catch(error => {
+          console.log("Error adding new list item");
+        });
+      }
+    });
   }
 
 }
