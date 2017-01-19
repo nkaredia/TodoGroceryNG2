@@ -96,7 +96,11 @@ export class IxDB {
         .equals(list.name)
         .delete()
         .then(value => {
-          subscriber.next(value);
+          this.deleteItemByListName(list.name).subscribe(value => {
+            subscriber.next(value);
+          }, error => {
+            subscriber.error(error);
+          });
         })
         .catch(error => {
           subscriber.next(error);
@@ -111,6 +115,36 @@ export class IxDB {
       }).catch(error => {
         subscriber.next(error);
       });
+    });
+  }
+
+  checkItem = (item: ListItem) => {
+    return new Observable<number>((subscriber: Subscriber<number>) => {
+      this.__db.table('listItems')
+        .where('id')
+        .equals(item['id'])
+        .modify({ isChecked: item.isChecked })
+        .then(value => {
+          subscriber.next(value);
+        })
+        .catch(error => {
+          subscriber.next(error);
+        });
+    });
+  }
+
+  deleteItemByListName = (list: string) => {
+    return new Observable<number>((subscriber: Subscriber<number>) => {
+      this.__db.table('listItems')
+        .where('listName')
+        .equals(list)
+        .delete()
+        .then(value => {
+          subscriber.next(value);
+        })
+        .catch(error => {
+          subscriber.error(error);
+        })
     });
   }
 

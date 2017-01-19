@@ -8,6 +8,9 @@
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
@@ -20,8 +23,14 @@
   <div #popoverText class="text-to-change">
     <ion-list>
       <ion-item-sliding *ngFor="let item of listItems">
-        <button ion-item>
-          {{item.name}}
+        <button ion-item (click)="checkItem(item)">
+          <ion-grid>
+            <ion-row>
+              <ion-col width-75>{{item.name}}</ion-col>
+              <ion-col width-25>{{item.quantity}} {{glo.mapUnitsInNumber(item.unit)}}</ion-col>
+            </ion-row>
+          </ion-grid>
+          <div class="check-item" *ngIf="item.isChecked"></div>
         </button>
         <ion-item-options side="right">
           <button ion-button color="danger">

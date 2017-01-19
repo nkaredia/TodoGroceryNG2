@@ -94,7 +94,7 @@ export class TgDataFactory {
   addNewListItem = (listItem: ListItem) => {
     return new Promise<number>((resolve, reject) => {
       this.ixdb.addNewListItem(listItem).subscribe(value => {
-        if(!isNaN(value)) {
+        if (!isNaN(value)) {
           resolve(value);
         } else {
           reject(value);
@@ -103,5 +103,23 @@ export class TgDataFactory {
         reject(error);
       });
     })
+  }
+
+  checkItem = (item: ListItem) => {
+    return new Promise<number>((resolve, reject) => {
+      this.ixdb.checkItem(item).subscribe(value => {
+        this.setPromise(value, resolve, reject);
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+  private setPromise = (value, resolve, reject) => {
+    if (!isNaN(value)) {
+      resolve(value);
+    } else {
+      reject(value);
+    }
   }
 }

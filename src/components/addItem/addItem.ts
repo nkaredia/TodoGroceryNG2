@@ -11,7 +11,7 @@ export class AddItem {
   currentList: List;
   addItemModel: ListItem;
   units;
-  temp;
+  glo = G;
 
   constructor(private viewCtrl: ViewController, private params: NavParams) {
     this.currentList = params.data['currentList'];
@@ -23,7 +23,6 @@ export class AddItem {
       unit: G.UNIT.pack,
       isChecked: false
     }
-    this.temp = this.mapUnits(2);
   }
 
   ionViewDidLoad() {

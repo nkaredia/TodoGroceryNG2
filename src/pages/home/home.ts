@@ -4,6 +4,7 @@ import { Popover } from '../../components/popover/popover';
 import { AddItem } from '../../components/addItem/addItem';
 import { TgDataFactory } from '../../providers/tg-data-factory';
 import { IxDB } from '../../providers/ixdb';
+import * as G from '../../globals';
 import 'rxjs';
 
 @Component({
@@ -16,6 +17,8 @@ export class HomePage implements OnInit {
   listItems: Array<ListItem>;
   currentlist: List;
   newItem: ListItem;
+
+  glo = G;
 
   constructor(public navCtrl: NavController,
     private popover: Popover,
@@ -87,11 +90,23 @@ export class HomePage implements OnInit {
       if (value && value.addItemModel) {
         this.newItem = value.addItemModel;
         this.factory.addNewListItem(this.newItem).then(value => {
-          this.listItems.push(this.newItem);
+          this.getAllListItems();
         }).catch(error => {
           console.log("Error adding new list item");
         });
       }
+    });
+  }
+
+  checkItem = (item: ListItem) => {
+    //this.listItems[this.listItems.indexOf(item)].isChecked = !this.listItems[this.listItems.indexOf(item)].isChecked;
+    let checkItem = this.listItems[this.listItems.indexOf(item)];
+    checkItem.isChecked = !checkItem.isChecked;
+    this.factory.checkItem(checkItem).then(value => {
+      //this.listItems[this.listItems.indexOf(item)].isChecked = !this.listItems[this.listItems.indexOf(item)].isChecked;
+    })
+    .catch(error => {
+      console.log('error checking item');
     });
   }
 

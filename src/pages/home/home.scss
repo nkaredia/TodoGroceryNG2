@@ -3,12 +3,26 @@ page-home {
     padding: 0 !important;
     ion-list {
       ion-item-sliding {
+        position: relative;
         button.item {
           min-height: 3.1em;
           padding-left: 0px;
           .item-inner {
             padding-left: 16px;
             padding-right: 16px;
+            .input-wrapper {
+              ion-label {
+                margin: 0;
+              }
+            }
+          }
+          .check-item {
+            width: calc(100% - 30px);
+            height: 2px;
+            position: absolute;
+            background-color: #555;
+            top: 50%;
+            left: 16px;
           }
         }
         ion-item-options {

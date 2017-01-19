@@ -6,3 +6,7 @@ export enum UNIT {
   pound,
   dozen
 }
+
+export function mapUnitsInNumber(index: string) {
+  return UNIT[index];
+}

@@ -29,7 +29,7 @@
         <ion-item>
           <ion-label>Unit</ion-label>
           <ion-select tabindex="2" [(ngModel)]="addItemModel.unit">
-            <ion-option *ngFor="let item of units" [value]="mapUnitsInNumber(item)">{{item}}</ion-option>
+            <ion-option *ngFor="let item of units" [value]="glo.mapUnitsInNumber(item)">{{item}}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
