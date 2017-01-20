@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
   newItem: ListItem;
 
   glo = G;
+  showSearchBar: boolean;
 
   constructor(public navCtrl: NavController,
     private popover: Popover,
@@ -30,6 +31,7 @@ export class HomePage implements OnInit {
     this.menuCtrl.enable(true);
     this.listItems = [];
     this.factory.setListItemsByName('untitled list');
+    this.showSearchBar = false;
   }
 
   ngOnInit() {
@@ -54,6 +56,19 @@ export class HomePage implements OnInit {
 
   closeMenuDrawer() {
     this.menuCtrl.close();
+  }
+
+  openSearchBar(e: Event) {
+    this.showSearchBar = true;
+    setTimeout(() => {
+      document.getElementById('srbar').classList.add('animate');
+      document.getElementById('srbar-back').classList.add('animate');
+    }, 10);
+    //e.srcElement.classList.add('animate');
+  }
+
+  hideSearchBar() {
+    this.showSearchBar = false;
   }
 
   changeCurrentList(list: List) {

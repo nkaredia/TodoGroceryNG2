@@ -22210,3 +22210,47 @@ page-home .scroll-content ion-list ion-item-sliding ion-item-options button {
   margin: 0 !important;
   height: 100% !important;
 }
+
+page-home .search-bar {
+  width: 0px;
+  height: 0px;
+  /* For Safari 3.1 to 6.0 */
+  transition: width 0.5s, height 2s;
+}
+
+page-home .search-bar .searchbar-search-icon {
+  display: none;
+}
+
+page-home .search-bar .searchbar-input {
+  padding: 0;
+  /* For Safari 3.1 to 6.0 */
+  transition: padding 0.5s;
+}
+
+page-home .search-bar.animate {
+  width: 100%;
+  height: 100%;
+}
+
+page-home .search-bar.animate .searchbar-search-icon {
+  display: initial;
+}
+
+page-home .search-bar.animate .searchbar-input {
+  padding: 6px 55px;
+}
+
+page-home .srbar-back-parent {
+  min-width: 44px;
+  margin: 0 6px;
+}
+
+page-home .srbar-back {
+  -webkit-transition: opacity 0.8s;
+  opacity: 0;
+}
+
+page-home .srbar-back.animate {
+  opacity: 1 !important;
+}
