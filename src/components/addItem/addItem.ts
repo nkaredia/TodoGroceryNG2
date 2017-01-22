@@ -26,7 +26,6 @@ export class AddItem {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TgAddItemPage');
   }
 
   dissmiss(add?: boolean) {

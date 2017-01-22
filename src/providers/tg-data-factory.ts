@@ -6,18 +6,11 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import { IxDB } from '../providers/ixdb';
 
-/*
-  Generated class for the TgDataFactory provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class TgDataFactory {
   public currentListItems: Subject<Array<ListItem>>;
 
   constructor(public http: Http, private ixdb: IxDB) {
-    console.log('Hello TgDataFactory Provider');
     this.currentListItems = new Subject<Array<ListItem>>();
   }
 
@@ -109,6 +102,26 @@ export class TgDataFactory {
     return new Promise<number>((resolve, reject) => {
       this.ixdb.checkItem(item).subscribe(value => {
         this.setPromise(value, resolve, reject);
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+  deleteListItem = (item: ListItem) => {
+    return new Promise<number>((resolve, reject) => {
+      this.ixdb.deleteListItem(item).subscribe(value => {
+        this.setPromise(value, resolve, reject);
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+  getItemsInRange = (offset: number, listName: string) => {
+    return new Promise<Array<ListItem>>((resolve, reject) => {
+      this.ixdb.getItemsInRange(offset, listName).subscribe(value => {
+        resolve(value);
       }, error => {
         reject(error);
       });

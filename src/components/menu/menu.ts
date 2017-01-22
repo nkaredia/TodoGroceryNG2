@@ -30,18 +30,17 @@ export class Menu implements OnInit {
   }
 
   ngOnInit() {
-    this.factory.getLists().subscribe((value) => {
-      console.log('--nk--', value)
-    }, (error) => {
-      console.log('--nk--', error)
-    }, () => {
-      return;
-    });
+    // this.factory.getLists().subscribe((value) => {
+    //   console.log('--nk--', value)
+    // }, (error) => {
+    //   console.log('--nk--', error)
+    // }, () => {
+    //   return;
+    // });
     this.registerSubscribers();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TgMenuPage');
   }
 
   registerSubscribers = () => {
@@ -52,7 +51,6 @@ export class Menu implements OnInit {
 
   registerAddListSubscriber = () => {
     this.onListAdd.subscribe((value: { newList: List, oldList: List }) => {
-      console.log(value);
       this.factory.addNewList(value.newList.name).then(resolve => {
         this.lists.push(value.newList);
       });
@@ -91,7 +89,6 @@ export class Menu implements OnInit {
           icon: 'md-create',
           handler: () => {
             this.editList(list);
-            console.log('Destructive clicked');
           }
         }, {
           text: 'Delete',
@@ -99,7 +96,6 @@ export class Menu implements OnInit {
           role: 'destructive',
           handler: () => {
             this.deleteList(list);
-            console.log('Archive clicked');
           }
         }
       ]
@@ -151,7 +147,6 @@ export class Menu implements OnInit {
         {
           text: 'Delete',
           handler: () => {
-            console.log('Agree clicked');
             this.factory.deleteListByName(list).then(value => {
               this.lists.splice(this.lists.indexOf(list), 1);
               this.changeList(this.lists[0]);
@@ -170,7 +165,6 @@ export class Menu implements OnInit {
   }
 
   changeList(list: List, closeDrawer?: boolean) {
-    console.log('--nk from menu', list);
     this.onChange.emit(list);
     this.currentStore = list;
     window.localStorage.setItem('currentStore', JSON.stringify(this.currentStore));
@@ -205,7 +199,6 @@ export class Menu implements OnInit {
   }
 
   newListHandler = (data: { listName: string }) => {
-    console.log(data);
     this.lists.push({ name: data.listName });
   }
 }

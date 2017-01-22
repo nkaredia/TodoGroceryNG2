@@ -35,23 +35,6 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    // this.menu.listClickObservable.subscribe((list:List) => {
-    //   console.log('--nk from home', list);
-    // }, (error: any) => {
-
-    // }, () => {
-
-    // })
-
-
-    this.factory.currentListItems.subscribe(value => {
-      this.listItems = value;
-    })
-
-    // this.ixdb.getListItems('untitled list').subscribe(value => {
-    //   console.log(value, '---nk---------------');
-    //   this.listItems = value;
-    // })
   }
 
   closeMenuDrawer() {
@@ -64,7 +47,6 @@ export class HomePage implements OnInit {
       document.getElementById('srbar').classList.add('animate');
       document.getElementById('srbar-back').classList.add('animate');
     }, 10);
-    //e.srcElement.classList.add('animate');
   }
 
   hideSearchBar() {
@@ -72,17 +54,15 @@ export class HomePage implements OnInit {
   }
 
   changeCurrentList(list: List) {
-    console.log('from home with love', list);
     this.currentlist = list;
-    this.getAllListItems();
+    this.listItems = [];
+    this.getMoreItems(null);
   }
 
   getAllListItems = () => {
     this.factory.getListItems(this.currentlist.name).subscribe(value => {
-      console.log('from home', value);
       this.listItems = value;
     }, error => {
-      console.log(error);
     }, () => {
 
     });
@@ -97,31 +77,47 @@ export class HomePage implements OnInit {
   }
 
   addItem(ev: Event) {
-    console.log('cliked');
     let modal = this.modalCtrl.create(AddItem, { currentList: this.currentlist });
     modal.present();
     modal.onDidDismiss(value => {
-      console.log('dissmiss', value);
       if (value && value.addItemModel) {
         this.newItem = value.addItemModel;
         this.factory.addNewListItem(this.newItem).then(value => {
           this.getAllListItems();
         }).catch(error => {
-          console.log("Error adding new list item");
         });
       }
     });
   }
 
+  deleteItem = (item: ListItem) => {
+    this.factory.deleteListItem(item).then(value => {
+      this.listItems.splice(this.listItems.indexOf(item), 1);
+    }).catch(error => {
+    });
+  }
+
   checkItem = (item: ListItem) => {
-    //this.listItems[this.listItems.indexOf(item)].isChecked = !this.listItems[this.listItems.indexOf(item)].isChecked;
     let checkItem = this.listItems[this.listItems.indexOf(item)];
     checkItem.isChecked = !checkItem.isChecked;
-    this.factory.checkItem(checkItem).then(value => {
-      //this.listItems[this.listItems.indexOf(item)].isChecked = !this.listItems[this.listItems.indexOf(item)].isChecked;
-    })
-    .catch(error => {
-      console.log('error checking item');
+    this.factory.checkItem(checkItem)
+      .then(value => {
+      })
+      .catch(error => {
+      });
+  }
+
+  getMoreItems = (e: any) => {
+    this.factory.getItemsInRange(
+      this.listItems.length,
+      this.currentlist.name
+    ).then((value: Array<ListItem>) => {
+      this.listItems = this.listItems.concat(value);
+      if (e && e.complete) {
+        e.complete();
+      }
+    }).catch(error => {
+      console.error(error);
     });
   }
 

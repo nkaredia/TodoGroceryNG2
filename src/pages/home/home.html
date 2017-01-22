@@ -41,13 +41,17 @@
           <div class="check-item" *ngIf="item.isChecked"></div>
         </button>
         <ion-item-options side="right">
-          <button ion-button color="danger">
+          <button ion-button color="danger" on-tap="deleteItem(item)">
         <ion-icon name="trash"></ion-icon>
         Delete
       </button>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+    <ion-infinite-scroll (ionInfinite)="getMoreItems($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles"
+      loadingText="Loading more data..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
   <ion-fab right bottom>
     <button color="primary" ion-fab (click)="addItem($event)"><ion-icon name="add"></ion-icon></button>

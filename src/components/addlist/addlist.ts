@@ -15,12 +15,10 @@ export class AddList {
   constructor(private viewCtrl: ViewController,
     private navParams: NavParams,
     private tgDataFactory: TgDataFactory) {
-    console.log(this.navParams);
     this.addListModel = this.navParams.data;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TgAddItemPage');
   }
 
 
@@ -36,7 +34,6 @@ export class AddList {
           this.addListModel.emitter.emit({ newList: { name: this.addListModel.listName }, oldList: this.addListModel.currentList });
           this.dissmiss();
         } else {
-          console.log('list already exists');
         }
       });
     }
