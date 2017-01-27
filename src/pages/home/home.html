@@ -20,7 +20,7 @@
         </button>
     </ion-buttons>
     <ion-buttons end *ngIf="showSearchBar" style="width: 100%;">
-      <ion-searchbar class="search-bar" id="srbar" (input)="getItems($event)"></ion-searchbar>
+      <ion-searchbar class="search-bar" id="srbar" (input)="search($event)"></ion-searchbar>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -30,7 +30,7 @@
 <ion-content #popoverContent #content padding class="popover-page">
   <div #popoverText class="text-to-change">
     <ion-list>
-      <ion-item-sliding *ngFor="let item of listItems">
+      <ion-item-sliding *ngFor="let item of searchItems">
         <button ion-item (click)="checkItem(item)">
           <ion-grid>
             <ion-row>

@@ -17,6 +17,7 @@ export class HomePage implements OnInit {
   listItems: Array<ListItem>;
   currentlist: List;
   newItem: ListItem;
+  searchItems: Array<ListItem>;
 
   glo = G;
   showSearchBar: boolean;
@@ -30,6 +31,7 @@ export class HomePage implements OnInit {
     private addItemCtrl: AddItem) {
     this.menuCtrl.enable(true);
     this.listItems = [];
+    this.searchItems = this.listItems;
     this.factory.setListItemsByName('untitled list');
     this.showSearchBar = false;
   }
@@ -47,6 +49,17 @@ export class HomePage implements OnInit {
       document.getElementById('srbar').classList.add('animate');
       document.getElementById('srbar-back').classList.add('animate');
     }, 10);
+  }
+
+  search = (query: Event) => {
+    this.searchItems = this.listItems;
+    if(query.srcElement['value'].length === 0) {
+      this.searchItems = this.listItems;
+    } else {
+      this.searchItems = this.listItems.filter((value: ListItem, index: number) => {
+        return value.name.startsWith(query.srcElement['value']);
+      });
+    }
   }
 
   hideSearchBar() {
@@ -113,6 +126,7 @@ export class HomePage implements OnInit {
       this.currentlist.name
     ).then((value: Array<ListItem>) => {
       this.listItems = this.listItems.concat(value);
+      this.searchItems = this.listItems;
       if (e && e.complete) {
         e.complete();
       }
