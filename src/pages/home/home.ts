@@ -5,6 +5,7 @@ import { AddItem } from '../../components/addItem/addItem';
 import { TgDataFactory } from '../../providers/tg-data-factory';
 import { IxDB } from '../../providers/ixdb';
 import * as G from '../../globals';
+import { SearchForPipe } from '../../globals';
 import 'rxjs';
 
 @Component({
@@ -17,7 +18,7 @@ export class HomePage implements OnInit {
   listItems: Array<ListItem>;
   currentlist: List;
   newItem: ListItem;
-  searchItems: Array<ListItem>;
+  searchQuery: string;
 
   glo = G;
   showSearchBar: boolean;
@@ -31,9 +32,9 @@ export class HomePage implements OnInit {
     private addItemCtrl: AddItem) {
     this.menuCtrl.enable(true);
     this.listItems = [];
-    this.searchItems = this.listItems;
     this.factory.setListItemsByName('untitled list');
     this.showSearchBar = false;
+    this.searchQuery = '';
   }
 
   ngOnInit() {
@@ -52,14 +53,7 @@ export class HomePage implements OnInit {
   }
 
   search = (query: Event) => {
-    this.searchItems = this.listItems;
-    if(query.srcElement['value'].length === 0) {
-      this.searchItems = this.listItems;
-    } else {
-      this.searchItems = this.listItems.filter((value: ListItem, index: number) => {
-        return value.name.startsWith(query.srcElement['value']);
-      });
-    }
+    this.searchQuery = query.srcElement['value'];
   }
 
   hideSearchBar() {
@@ -126,7 +120,6 @@ export class HomePage implements OnInit {
       this.currentlist.name
     ).then((value: Array<ListItem>) => {
       this.listItems = this.listItems.concat(value);
-      this.searchItems = this.listItems;
       if (e && e.complete) {
         e.complete();
       }

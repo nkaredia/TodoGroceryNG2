@@ -30,7 +30,7 @@
 <ion-content #popoverContent #content padding class="popover-page">
   <div #popoverText class="text-to-change">
     <ion-list>
-      <ion-item-sliding *ngFor="let item of searchItems">
+      <ion-item-sliding *ngFor="let item of (listItems | searchFor:searchQuery)">
         <button ion-item (click)="checkItem(item)">
           <ion-grid>
             <ion-row>

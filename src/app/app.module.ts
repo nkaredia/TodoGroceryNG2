@@ -6,8 +6,9 @@ import { Menu } from '../components/menu/menu';
 import { TgDataFactory } from '../providers/tg-data-factory';
 import { Popover } from '../components/popover/popover';
 import { AddItem } from '../components/addItem/addItem';
-import {IxDB} from '../providers/ixdb';
-import {AddList} from '../components/addlist/addlist';
+import { IxDB } from '../providers/ixdb';
+import { AddList } from '../components/addlist/addlist';
+import { SearchForPipe } from '../globals';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {AddList} from '../components/addlist/addlist';
     Menu,
     Popover,
     AddItem,
-    AddList
+    AddList,
+    SearchForPipe
   ],
   imports: [
     IonicModule.forRoot(MyApp)
