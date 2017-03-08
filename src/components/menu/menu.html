@@ -4,14 +4,14 @@
       STORES
     </ion-list-header>
 
-    <button ion-item *ngFor="let store of stores" (click)="selectStore($event, store)" [ngClass]="{'active': currentStore && currentStore.name === store.name}">
+    <button ion-item *ngFor="let store of stores" (click)="selectStore($event, store)" [ngClass]="{'activated': currentStore && currentStore.name === store.name}">
       <ion-icon hideWhen="ios" name="ios-arrow-forward" item-right></ion-icon>
       {{store.name}}
     </button>
   </ion-list>
 </ion-content>
 <ion-footer add-new-store>
-  <button ion-button icon-left full>
+  <button ion-button icon-left full (click)="addOrUpdateStore('Add')">
     <ion-icon name="add"></ion-icon>
       Add new Store
   </button>

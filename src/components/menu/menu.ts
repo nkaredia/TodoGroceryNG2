@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { DataFactory } from '../../providers/dataFactory';
 import { IStore } from '../../common/tgCore';
-import { AlertController } from 'ionic-angular';
+import { AlertController, AlertOptions } from 'ionic-angular';
 
 @Component({
   selector: 'tg-menu',
@@ -20,7 +20,6 @@ export class Menu {
   }
 
   private selectStore = (e: Event, store: IStore) => {
-    console.log(store, "menu");
     this.onChange.emit(store);
     this.closeDrawer.emit(null);
   }
@@ -38,31 +37,40 @@ export class Menu {
     this.currentStore = current;
   }
 
+  private handleAddOrUpdateStore = (store: IStore, type: string) => {
+    if (type.toLowerCase() === 'add') {
+      this.factory.
+    }
+  }
+
   private addOrUpdateStore = (type: string, store?: IStore) => {
-    let prompt = this.alertCtrl.create({
-      title: type.toUpperCase(),
-      message: type.toUpperCase() === 'ADD' ? 'Add new Store' : 'Update ' + store.name,
-      inputs: [
-        {
-          name: 'Store',
-          placeholder: 'Store Name'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Add',
-          handler: data => {
-            console.log('Saved clicked');
-          }
-        }
-      ]
-    });
+    let prompt = this.alertCtrl.create();
     prompt.present();
   }
+
+  private alertOptions = {
+    ADD: this.addStoreObject,
+    UPDATE: this.updateStoreObject
+  }
+
+  private addStoreObject: AlertOptions = {
+    title: 'ADD',
+    message: 'Add a new Store',
+    inputs: [{ name: 'store', placeholder: 'Store Name' }],
+    buttons: [
+      { text: 'Cancel', handler: data => { console.log('Cancel clicked'); } },
+      { text: 'ADD', handler: data => { } }
+    ]
+  }
+
+  private updateStoreObject: AlertOptions = {
+    title: 'UPDATE',
+    message: 'Update ',
+    inputs: [{ name: 'store', placeholder: 'Store Name' }],
+    buttons: [
+      { text: 'Cancel', handler: data => { console.log('Cancel clicked'); } },
+      { text: 'ADD', handler: data => { } }
+    ]
+  }
+
 }

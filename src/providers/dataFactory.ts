@@ -40,9 +40,19 @@ export class DataFactory {
     localStorage.setItem('currentStore', JSON.stringify(store));
   }
 
-  private getLocalCurrentStore(): IStore {
+  private getLocalCurrentStore(broadcast: boolean = false): IStore {
     let val = localStorage.getItem('currentStore');
+    this.currentStore.next(val ? JSON.parse(val) : {});
     return val ? JSON.parse(val) : {};
+  }
+
+  private async addFirstStore() {
+    if(await this.addNewStore('Unititled Store') > 0) {
+      let _store = await this.getAllStores();
+      this.stores.next(_store);
+      this.setLocalCurrentStore(this.stores.getValue()[0]);
+      this.getLocalCurrentStore(true);
+    }
   }
 
   private async getAllStores(): Promise<Array<IStore>> {
@@ -50,16 +60,13 @@ export class DataFactory {
       let _store = await this.ixdb.getAllStores();
       if (_store && _store.length > 0) {
         this.stores.next(_store);
+        this.getLocalCurrentStore(true); 
         return Promise.resolve(_store);
-      } else if (await this.ixdb.addNewStore('Untitled Store') > 0) {
-        this.getAllStores();
-        this.currentStore.next(this.stores.getValue()[0]);
-        return Promise.resolve(this.stores.getValue());
+      } else {
+        this.addFirstStore();
       }
     } catch (error) {
-      return Promise.reject('Error getting data FACTORY');
-    } finally {
-      this.currentStore.next(this.getLocalCurrentStore());
+      Promise.reject('Error getting data');
     }
   }
 

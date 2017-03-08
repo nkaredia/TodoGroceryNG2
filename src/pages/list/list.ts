@@ -13,11 +13,8 @@ export class List {
   constructor(public navCtrl: NavController,
     private factory: DataFactory) {
     this.search = false;
-    console.log('v', this.factory.stores.getValue());
     this.factory.stores.subscribe((v) => {
-      console.log('vvvv', v);
     });
-    console.log(TABLES, TABLES[TABLES.STORES], TABLES[TABLES['STORES']]);
   }
 
   toggleSearch = (e: Event) => {
@@ -29,7 +26,6 @@ export class List {
   }
 
   changeCurrentStore(store: IStore) {
-    console.log(store, "dcdcsd");
     this.factory.currentStore.next(store);
   }
 
