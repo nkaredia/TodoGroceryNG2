@@ -1,0 +1,14 @@
+[app-toolbar] {
+  ion-buttons[start] {
+    order: 3 !important;
+  }
+  ion-buttons[search-back-button] {
+    width: 56px;
+    button {
+      width: 56px;
+    }
+  }
+}
+[list-page] {
+  
+}

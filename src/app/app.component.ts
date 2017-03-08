@@ -1,24 +1,25 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-
-import { HomePage } from '../pages/home/home';
- 
+import { List } from '../pages/list/list';
+import { Menu } from '../components/menu/menu';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = HomePage;
+  @ViewChild(Nav) nav: Nav;
+  rootPage: any = List;
 
-  constructor(platform: Platform) {
-    platform.ready().then(() => {
+  constructor(public platform: Platform) {
+    this.initializeApp();
+  }
+  
+  initializeApp() {
+    this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      StatusBar.show();
-      StatusBar.styleBlackTranslucent();
-      StatusBar.overlaysWebView(false);
-      StatusBar.backgroundColorByHexString('#1A237E');
+      StatusBar.styleDefault();
       Splashscreen.hide();
     });
   }

@@ -1,19 +1,18 @@
 <ion-content>
   <ion-list no-lines>
-    <ion-list-header style="padding-top: 16px;">
-      Stores
+    <ion-list-header>
+      STORES
     </ion-list-header>
-    <button class="tg-list-item" [ngClass]="{active: currentStore.name === item.name}" ion-item *ngFor="let item of lists" (press)="presentActionSheet(item)"
-      on-tap="changeList(item, true)">{{item.name}}
-      <ion-icon md="ios-arrow-forward" item-right></ion-icon>
+
+    <button ion-item *ngFor="let store of stores" (click)="selectStore($event, store)" [ngClass]="{'active': currentStore && currentStore.name === store.name}">
+      <ion-icon hideWhen="ios" name="ios-arrow-forward" item-right></ion-icon>
+      {{store.name}}
     </button>
   </ion-list>
 </ion-content>
-<ion-footer>
-  <ion-toolbar class="bottom-footer">
-    <button ion-button full icon-left clear color="primary" (click)="addNewList()">
-        <ion-icon name="add"></ion-icon>
-        Add new store
-      </button>
-  </ion-toolbar>
+<ion-footer add-new-store>
+  <button ion-button icon-left full>
+    <ion-icon name="add"></ion-icon>
+      Add new Store
+  </button>
 </ion-footer>

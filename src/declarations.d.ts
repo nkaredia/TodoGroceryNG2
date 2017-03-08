@@ -11,30 +11,4 @@
   For more info on type definition files, check out the Typescript docs here:
   https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html
 */
-
-
 declare module '*';
-
-
-interface List {
-  name: string;
-}
-
-interface ListItem {
-  listName: string;
-  name: string;
-  quantity: number;
-  unit: number;
-  isChecked: boolean;
-}
-
-interface IAddListModel {
-  emitter: any;
-  type: string;
-  title: string;
-  button: string;
-  placeholder: string;
-  listName: string;
-  currentList?: List;
-}
-

@@ -1,27 +1,16 @@
 tg-menu {
-  .bottom-footer {
-    padding: 0;
-    .toolbar-content {
-      height: 56px;
-      button {
-        height: 100%;
-        margin: 0;
-        ion-icon {
-          font-size: 2em;
-        }
-      }
-    }
+  ion-list-header {
+    margin-bottom: 0px !important;
+    margin-top: 13px;
+    border: 0 !important;
   }
-  ion-content {
-    .tg-list-item {
+  [add-new-store] {
+    button {
+      margin: 0;
+      height: 6rem;
       ion-icon {
-        font-size: 2rem;
-        color: #999999;
-        min-height: 1.6rem;
+        font-size: 3rem;
       }
-    }
-    .tg-list-item.active {
-      background-color: #d1d1d1;
     }
   }
 }

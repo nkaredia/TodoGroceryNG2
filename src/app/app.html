@@ -1,1 +1,5 @@
-<ion-nav [root]="rootPage" #content></ion-nav>
+<!--<ion-menu [content]="content">
+  <tg-menu (onChange)="changeCurrentStore($event)"></tg-menu>
+</ion-menu>-->
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

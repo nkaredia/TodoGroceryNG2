@@ -1,24 +1,16 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { List } from '../pages/list/list';
 import { Menu } from '../components/menu/menu';
-import { TgDataFactory } from '../providers/tg-data-factory';
-import { Popover } from '../components/popover/popover';
-import { AddItem } from '../components/addItem/addItem';
-import { IxDB } from '../providers/ixdb';
-import { AddList } from '../components/addlist/addlist';
-import { SearchForPipe } from '../globals';
+import { DataFactory } from '../providers/dataFactory';
+import { IXDB } from '../providers/iXDb';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    Menu,
-    Popover,
-    AddItem,
-    AddList,
-    SearchForPipe
+    List,
+    Menu
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -26,11 +18,9 @@ import { SearchForPipe } from '../globals';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    Popover,
-    AddItem,
-    AddList
+    List,
+    Menu
   ],
-  providers: [TgDataFactory, IxDB, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, IXDB, DataFactory]
 })
 export class AppModule { }
