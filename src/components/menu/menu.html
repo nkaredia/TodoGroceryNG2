@@ -4,7 +4,10 @@
       STORES
     </ion-list-header>
 
-    <button ion-item *ngFor="let store of stores" (click)="selectStore($event, store)" [ngClass]="{'activated': currentStore && currentStore.name === store.name}">
+    <button ion-item *ngFor="let store of stores" 
+            (click)="selectStore($event, store)" 
+            [ngClass]="{'activated': currentStore && currentStore.name === store.name}"
+            (press)="openStoreOptions(store)">
       <ion-icon hideWhen="ios" name="ios-arrow-forward" item-right></ion-icon>
       {{store.name}}
     </button>
