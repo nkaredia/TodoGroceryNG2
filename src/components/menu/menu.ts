@@ -1,37 +1,18 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { DataFactory } from '../../providers/dataFactory';
 import { IStore } from '../../common/tgCore';
-import { AlertController, AlertOptions, ActionSheetController, ActionSheetOptions } from 'ionic-angular';
+import {
+  AlertController,
+  AlertOptions,
+  ActionSheetController,
+  ActionSheetOptions
+} from 'ionic-angular';
 
 @Component({
   selector: 'tg-menu',
   templateUrl: 'menu.html'
 })
 export class Menu {
-  private addStoreObject: AlertOptions = {
-    title: 'ADD',
-    message: 'Add a new Store',
-    inputs: [{ name: 'store', placeholder: 'Store Name' }],
-    buttons: [
-      { text: 'Cancel', handler: data => { console.log('Cancel clicked'); } },
-      { text: 'ADD', handler: data => { this.handleAddOrUpdateStore(data.store, 'ADD'); } }
-    ]
-  }
-
-  private updateStoreObject: AlertOptions = {
-    title: 'UPDATE',
-    message: 'Update ',
-    inputs: [{ name: 'store', placeholder: 'Store Name' }],
-    buttons: [
-      { text: 'Cancel', handler: data => { this.handleAddOrUpdateStore(data.store, 'UPDATE'); } },
-      { text: 'UPDATE', handler: data => { } }
-    ]
-  }
-
-  private alertOptions = {
-    ADD: this.addStoreObject,
-    UPDATE: this.updateStoreObject
-  }
 
   @Output() onChange: EventEmitter<IStore> = new EventEmitter<IStore>();
   @Output() closeDrawer: EventEmitter<IStore>;
@@ -51,18 +32,38 @@ export class Menu {
   }
 
   openStoreOptions = (store: IStore) => {
-    console.log('long press');
     this.actionSheetCtrl.create(this.createActionSheetOptions(store)).present();
   }
 
   addOrUpdateStore = (type: string, store?: IStore) => {
-    let options = this.alertOptions[type.toUpperCase()];
-    if (store && type.toUpperCase() === 'UPDATE') {
-      options.message = 'Update' + store.name
-    }
-    let prompt = this.alertCtrl.create(options);
+    let prompt = this.alertCtrl.create( this.generateAlertOptions(type, store));
     prompt.present();
   }
+
+  generateAlertOptions = (type: string, store: IStore): AlertOptions => {
+    let t = type.toLowerCase();
+    return {
+      title: t.toUpperCase(),
+      message: t === 'add' ? 'Add a new Store' : 'Update ' + store.name,
+      inputs: [{ name: 'store', placeholder: 'Store Name', value: t === 'update' ? store.name : '' }],
+      buttons: [
+        { text: 'Cancel', handler: data => { } },
+        { text: t.capitalize(), handler: data => { this.handleAddOrUpdateStore(data.store, t.toUpperCase()); } }
+      ]
+    }
+  }
+
+  private handleAddOrUpdateStore = (store: IStore, type: string) => {
+    if (type.toLowerCase() === 'add') {
+      this.factory.addNewStore(store.name);
+    } else {
+      this.factory.updateStore(store.name);
+    }
+  }
+
+  /**
+   * Register All Subscribers here
+   */
 
   private registerSubscribers = () => {
     this.factory.stores.subscribe(this.subscribeStores);
@@ -77,41 +78,35 @@ export class Menu {
     this.currentStore = current;
   }
 
-  private handleAddOrUpdateStore = (store: IStore, type: string) => {
-    if (type.toLowerCase() === 'add') {
-      this.factory.addNewStore(store.name);
-    } else {
-      this.factory.updateStore(store.name);
-    }
-  }
+  //********************************************* */
 
   private createActionSheetOptions(store: IStore): ActionSheetOptions {
     return {
       title: 'Modify your Store',
-        buttons: [
-          {
-            text: 'Delete',
-            role: 'destructive',
-            icon: 'trash',
-            handler: () => {
-              console.log('Destructive clicked');
-            }
-          }, {
-            text: 'Update',
-            icon: 'create',
-            handler: () => {
-              console.log('Archive clicked');
-              this.addOrUpdateStore('UPDATE', store);
-            }
-          }, {
-            text: 'Cancel',
-            role: 'cancel',
-            icon: 'close',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            console.log('Destructive clicked');
           }
-        ]
+        }, {
+          text: 'Update',
+          icon: 'create',
+          handler: () => {
+            console.log('Archive clicked');
+            this.addOrUpdateStore('UPDATE', store);
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: 'close',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
     }
   }
 }

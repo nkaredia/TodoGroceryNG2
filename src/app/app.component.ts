@@ -13,8 +13,11 @@ export class MyApp {
 
   constructor(public platform: Platform) {
     this.initializeApp();
+    String.prototype.capitalize = function () {
+      return this.charAt(0).toUpperCase() + this.slice(1);
+    }
   }
-  
+
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -22,5 +25,12 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
     });
+  }
+}
+
+
+declare global {
+  interface String {
+    capitalize(): string;
   }
 }
