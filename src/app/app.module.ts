@@ -21,6 +21,6 @@ import { IXDB } from '../providers/iXDb';
     List,
     Menu
   ],
-  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, IXDB, DataFactory]
+  providers: [IXDB, DataFactory]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import { IStore } from '../common/tgCore';
+import { IStore, TABLE } from '../common/tgCore';
 
 export class IXDB {
   private __db: Dexie = null;
@@ -8,27 +8,36 @@ export class IXDB {
     this.createTables();
   }
 
-  async getStoreByName(name: string): Promise<IStore> {
-    return await this.__db.table<IStore>('stores')
-      .where('name')
-      .equalsIgnoreCase(name)
+  async getAll<T>(table: TABLE): Promise<Array<T>> {
+    return await this.__db
+      .table<T>(this.table(table))
+      .toArray();
+  }
+
+  async getOnce<T>(table: TABLE, key: string, compareWith: any): Promise<T> {
+    return await this.__db
+      .table<T>(this.table(table))
+      .where(key)
+      .equalsIgnoreCase(compareWith)
       .first();
   }
 
-  async getAllStores(): Promise<Array<IStore>> {
-    return await this.__db.table<IStore>('stores').toArray();
+  async addOne<T>(table: TABLE, object: T): Promise<number> {
+    return await this.__db
+      .table<T>(this.table(table))
+      .add(object);
   }
 
-  async updateStore(name: string): Promise<number> {
-    return await this.__db.table<IStore>('stores').put({ name: name });
+  async addOrReplaceOne<T>(table: TABLE, object: T): Promise<number> {
+    return await this.__db
+      .table<T>(this.table(table))
+      .put(object);
   }
 
-  async addNewStore(name: string): Promise<number> {
-    return await this.__db.table<IStore>('stores').add({ name: name });
-  }
-
-  async addOrReplaceData<T>(data: T, table: TABLES, queryType: QUERYTYPE): Promise<number> {
-    return await this.__db.table<T>(TABLES[table])[QUERYTYPE[queryType]](data);
+  async removeOne(table: TABLE, index: number): Promise<void> {
+    return await this.__db
+    .table(this.table(table))
+    .delete(index);
   }
 
   private createTables = () => {
@@ -43,14 +52,9 @@ export class IXDB {
     this.__db = new Dexie('tgDB');
   }
 
+  private table = (table: TABLE): string => {
+    return TABLE[table].toLowerCase();
+  }
+
 }
 
-enum QUERYTYPE {
-  ADD = 0,
-  REPLACE = 1
-}
-
-enum TABLES {
-  STORES = 0,
-  ITEMS = 1
-}

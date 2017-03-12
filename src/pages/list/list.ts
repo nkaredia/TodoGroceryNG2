@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
 import { DataFactory } from '../../providers/dataFactory';
 import { IStore } from '../../common/tgCore';
+import {
+  NavController,
+  MenuController
+} from 'ionic-angular';
 
 @Component({
   selector: 'tg-list',
@@ -11,7 +14,8 @@ export class List {
   search: boolean;
 
   constructor(public navCtrl: NavController,
-    private factory: DataFactory) {
+    private factory: DataFactory,
+    private menuCtrl: MenuController) {
     this.search = false;
     this.factory.stores.subscribe((v) => {
     });
@@ -26,12 +30,7 @@ export class List {
   }
 
   changeCurrentStore(store: IStore) {
-    this.factory.currentStore.next(store);
+    this.menuCtrl.close();
   }
 
-}
-
-enum TABLES {
-  STORES = 0,
-  ITEMS = 1
 }

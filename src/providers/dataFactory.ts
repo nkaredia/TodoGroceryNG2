@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { IStore, IList, UNIT } from '../common/tgCore';
+import { IStore, IList, UNIT, TABLE } from '../common/tgCore';
 import { IXDB } from '../providers/iXDb';
 import { Injectable } from '@angular/core';
 
@@ -13,61 +13,68 @@ export class DataFactory {
   constructor(private ixdb: IXDB) {
     this.stores = new BehaviorSubject<Array<IStore>>([]);
     this.currentStore = new BehaviorSubject<IStore>(null);
-    this.getAllStores();
+    this.initializeFirstTimeDatabase();
   }
-
-  
 
   getStoreByName = (name: string): IStore => {
     return this.stores.getValue().find(i => i.name.toLocaleLowerCase() === name.toLocaleLowerCase());
   }
 
-  async updateStore(name: string) {
-    return await this.ixdb.updateStore(name);
+  changeCurrentStore = (store: IStore) => {
+    this.setStoreInLocal(store);
   }
 
-  async addNewStore(name: string) {
-    return await this.ixdb.addNewStore(name);
-  }
-
-  private subscribe = () => {
-   this.currentStore.subscribe((value) => {
-    this.setLocalCurrentStore(value);
-   }); 
-  }
-
-  private setLocalCurrentStore(store: IStore) {
-    localStorage.setItem('currentStore', JSON.stringify(store));
-  }
-
-  private getLocalCurrentStore(broadcast: boolean = false): IStore {
-    let val = localStorage.getItem('currentStore');
-    this.currentStore.next(val ? JSON.parse(val) : {});
-    return val ? JSON.parse(val) : {};
-  }
-
-  private async addFirstStore() {
-    if(await this.addNewStore('Unititled Store') > 0) {
-      let _store = await this.getAllStores();
-      this.stores.next(_store);
-      this.setLocalCurrentStore(this.stores.getValue()[0]);
-      this.getLocalCurrentStore(true);
+  async updateStore(store: IStore): Promise<number> {
+    if (await this.ixdb.getOnce(TABLE.STORES, 'name', store.name)) {
+      throw new Error('Store already exists');
     }
+    let index = await this.ixdb.addOrReplaceOne(TABLE.STORES, store);
+    if (index === 0) {
+      throw new Error('Unable to update store');
+    }
+    this.getAllStores();
+    return index;
+  }
+
+  async addNewStore(store: IStore): Promise<number> {
+    if (await this.ixdb.getOnce(TABLE.STORES, 'name', store.name)) {
+      throw new Error('Store already exists');
+    }
+    let index = await this.ixdb.addOne(TABLE.STORES, store);
+    if (index === 0) {
+      throw new Error('Unable to create store');
+    }
+    this.getAllStores();
+    return index;
+  }
+
+  private getStoreFromLocal = () => {
+    return JSON.parse(localStorage.getItem('currentStore'));
+  }
+
+  private setStoreInLocal = (store: IStore) => {
+    localStorage.setItem('currentStore', JSON.stringify(store));
+    this.currentStore.next(store);
   }
 
   private async getAllStores(): Promise<Array<IStore>> {
-    try {
-      let _store = await this.ixdb.getAllStores();
-      if (_store && _store.length > 0) {
-        this.stores.next(_store);
-        this.getLocalCurrentStore(true); 
-        return Promise.resolve(_store);
-      } else {
-        this.addFirstStore();
-      }
-    } catch (error) {
-      Promise.reject('Error getting data');
-    }
+    let __stores = await this.ixdb.getAll<IStore>(TABLE.STORES);
+    this.stores.next(__stores);
+    return __stores;
   }
 
+  private async initializeFirstTimeDatabase() {
+    let stores: Array<IStore> = await this.ixdb.getAll<IStore>(TABLE.STORES);
+    if (!stores || stores.length === 0) {
+      let index = await this.ixdb.addOne<IStore>(TABLE.STORES, { name: 'Untitled Store' });
+      if (!index || index === 0) {
+        throw new Error('Unable to create default store');
+      }
+      this.getAllStores();
+      this.setStoreInLocal(await this.ixdb.getOnce<IStore>(TABLE.STORES, 'name', 'Untitled Store'));
+    } else {
+      this.stores.next(stores);
+      this.currentStore.next(this.getStoreFromLocal());
+    }
+  }
 }
