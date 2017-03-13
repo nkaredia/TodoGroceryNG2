@@ -3,8 +3,10 @@ import { DataFactory } from '../../providers/dataFactory';
 import { IStore } from '../../common/tgCore';
 import {
   NavController,
-  MenuController
+  MenuController,
+  ModalController
 } from 'ionic-angular';
+import { AddItem } from '../../components/addItem/addItem';
 
 @Component({
   selector: 'tg-list',
@@ -15,7 +17,8 @@ export class List {
 
   constructor(public navCtrl: NavController,
     private factory: DataFactory,
-    private menuCtrl: MenuController) {
+    private menuCtrl: MenuController,
+    private modalCtrl: ModalController) {
     this.search = false;
     this.factory.stores.subscribe((v) => {
     });
@@ -31,6 +34,11 @@ export class List {
 
   changeCurrentStore(store: IStore) {
     this.menuCtrl.close();
+  }
+
+  addNewItem = (e: Event) => {
+    let modal = this.modalCtrl.create(AddItem);
+    modal.present();
   }
 
 }

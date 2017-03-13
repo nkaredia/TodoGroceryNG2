@@ -8,7 +8,31 @@
       width: 56px;
     }
   }
+  .bar-buttons-ios[end] {
+    width: 56px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 8px;
+  }
 }
+
 [list-page] {
-  
+  padding: 0px !important;
+  .scroll-content {
+    padding: 0px !important;
+  }
+  .store-item-list {
+    .item-ios {
+      border-bottom: 1px solid $item-ios-divider-color;
+    }
+    .item-md {
+      border-bottom: 1px solid $list-md-border-color;
+    }
+    .item-wp {
+      border-bottom: 1px solid $list-wp-border-color;
+    }
+    .item:last-child {
+      border: 0px;
+    }
+  }
 }

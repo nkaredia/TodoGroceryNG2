@@ -5,12 +5,14 @@ import { List } from '../pages/list/list';
 import { Menu } from '../components/menu/menu';
 import { DataFactory } from '../providers/dataFactory';
 import { IXDB } from '../providers/iXDb';
+import { AddItem } from '../components/addItem/addItem';
 
 @NgModule({
   declarations: [
     MyApp,
     List,
-    Menu
+    Menu,
+    AddItem
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -19,7 +21,8 @@ import { IXDB } from '../providers/iXDb';
   entryComponents: [
     MyApp,
     List,
-    Menu
+    Menu,
+    AddItem
   ],
   providers: [IXDB, DataFactory]
 })

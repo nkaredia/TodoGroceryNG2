@@ -4,14 +4,17 @@ tg-menu {
     margin-top: 13px;
     border: 0 !important;
   }
+  .list-ios {
+    margin-top: 47px !important;
+  }
   .item-md.active {
-    background-color: $list-md-activated-background-color; 
+    background-color: $list-md-activated-background-color;
   }
   .item-ios.active {
-    background-color: $list-ios-activated-background-color; 
+    background-color: $list-ios-activated-background-color;
   }
   .item-wp.active {
-    background-color: $list-wp-activated-background-color; 
+    background-color: $list-wp-activated-background-color;
   }
   [add-new-store] {
     button {

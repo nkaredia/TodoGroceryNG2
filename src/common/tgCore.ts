@@ -6,22 +6,23 @@ export declare interface IStore {
   name: string;
 }
 
-export declare interface IList {
+export declare interface IItem {
   id?: number;
-  store: IStore;
+  storeId: number;
   name: string;
   quantity: number;
   unit: UNIT;
   checked: boolean;
 }
 
-export declare enum UNIT {
+export enum UNIT {
   pk = 0,
   kg = 1,
-  lb = 2,
-  lt = 3,
-  gl = 4,
-  dz = 5
+  gm = 2,
+  lb = 3,
+  lt = 4,
+  gal = 5,
+  doz = 6
 }
 
 export enum TABLE {

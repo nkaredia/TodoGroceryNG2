@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { IStore, IList, UNIT, TABLE } from '../common/tgCore';
+import { IStore, IItem, UNIT, TABLE } from '../common/tgCore';
 import { IXDB } from '../providers/iXDb';
 import { Injectable } from '@angular/core';
 
@@ -9,11 +9,37 @@ export class DataFactory {
 
   public readonly stores: BehaviorSubject<Array<IStore>>;
   public readonly currentStore: BehaviorSubject<IStore>;
+  public readonly items: BehaviorSubject<Array<IItem>>;
 
   constructor(private ixdb: IXDB) {
     this.stores = new BehaviorSubject<Array<IStore>>([]);
     this.currentStore = new BehaviorSubject<IStore>(null);
+    this.items = new BehaviorSubject<Array<IItem>>([]);
     this.initializeFirstTimeDatabase();
+    this.currentStore.subscribe(this.subscribeCurrentStore)
+  }
+
+
+  // ITEM - Start
+
+  async addNewItem(item: IItem): Promise<number> {
+    return await this.ixdb.addOne<IItem>(TABLE.ITEMS, item);
+  }
+
+  async getCurrentStoreItems(storeId: number) {
+    let items = await this.ixdb.getBulk<IItem>(TABLE.ITEMS, 'storeId', storeId);
+    this.items.next(items);
+    return items;
+  }
+
+  // ITEM - End
+
+  // STORE - Start
+
+  subscribeCurrentStore = (currentStore: IStore) => {
+    if(currentStore !== null) {
+      this.getCurrentStoreItems(currentStore.id);
+    }
   }
 
   getStoreByName = (name: string): IStore => {

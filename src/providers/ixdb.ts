@@ -22,6 +22,14 @@ export class IXDB {
       .first();
   }
 
+  async getBulk<T>(table: TABLE, key: string, compareWith: any): Promise<Array<T>> {
+    return await this.__db
+    .table<T>(this.table(table))
+    .where(key)
+    .equals(compareWith)
+    .toArray();
+  }
+
   async addOne<T>(table: TABLE, object: T): Promise<number> {
     return await this.__db
       .table<T>(this.table(table))
@@ -42,9 +50,10 @@ export class IXDB {
 
   private createTables = () => {
     if (this.__db !== null) {
-      this.__db.version(1).stores(
-        { stores: '++id, name' }
-      )
+      this.__db.version(1).stores({
+        stores: '++id, name',
+        items: '++id, storeId, name, quantity, unit, isChecked'
+      });
     }
   }
 
