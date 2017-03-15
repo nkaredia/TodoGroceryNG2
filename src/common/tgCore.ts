@@ -1,6 +1,3 @@
-import { Toast, ToastOptions, ToastController } from 'ionic-angular';
-import { Injectable } from '@angular/core';
-
 export declare interface IStore {
   id?: number;
   name: string;

@@ -10,14 +10,19 @@ export class AddItem {
   unit: any;
 
   constructor(private viewCtrl: ViewController) {
+    console.log(this.getUnits(), 'dsfsdsd');
   }
 
   closeModal = (e: Event) => {
     this.viewCtrl.dismiss();
   }
 
+  getUnitInString = (unit: UNIT) => {
+    return UNIT[unit];
+  }
+
   getUnits = () => {
-     return Object.keys(UNIT).filter(key => !isNaN(Number(UNIT[key])));
+    return Object.keys(UNIT).filter(i => isNaN(Number(UNIT[i])));
   }
 
 }

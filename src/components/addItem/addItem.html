@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Add new Item</ion-title>
+    <ion-title>Add Item</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="closeModal($event)">
         <ion-icon name="close"></ion-icon>
@@ -23,10 +23,12 @@
 
     <ion-item>
       <ion-label>Unit</ion-label>
-      <ion-select>
-        <ion-option *ngFor="let u of getUnits()" val='u'>{{u}}</ion-option>
+      <ion-select [(ngModel)]="unit">
+        <ion-option *ngFor="let u of getUnits()" val='u'>{{getUnitInString(u)}}</ion-option>
       </ion-select>
     </ion-item>
-
   </ion-list>
+  <div padding>
+    <button ion-button block>Add</button>
+  </div>
 </ion-content>

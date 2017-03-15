@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import { IStore, TABLE } from '../common/tgCore';
+import { TABLE } from '../common/tgCore';
 
 export class IXDB {
   private __db: Dexie = null;
