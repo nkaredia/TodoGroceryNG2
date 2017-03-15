@@ -10,4 +10,17 @@
     padding: 0px 15px;
     border-bottom: 1px solid $list-ios-border-color !important
   }
+  ion-item.ng-pristine.ng-touched {
+    .item-inner {
+      border-bottom: 2px solid color($colors, danger);
+      .label {
+        color: color($colors, danger);
+      }
+    }
+  }
+  ion-item.ng-pristine.ng-touched.input-has-focus {
+    .item-inner {
+      box-shadow: 0 -1px 0 0 color($colors, danger);
+    }
+  }
 }

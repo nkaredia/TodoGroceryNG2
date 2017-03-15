@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataFactory } from '../../providers/dataFactory';
-import { IStore } from '../../common/tgCore';
+import { IStore, IItem } from '../../common/tgCore';
 import {
   NavController,
   MenuController,
@@ -36,9 +36,15 @@ export class List {
     this.menuCtrl.close();
   }
 
+  subscribeAddItem = (item: IItem) => {
+    console.log(item);
+  }
+
   addNewItem = (e: Event) => {
     let modal = this.modalCtrl.create(AddItem);
     modal.present();
+    modal.subscribe(this.subscribeAddItem);
   }
+
 
 }
