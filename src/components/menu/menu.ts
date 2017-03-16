@@ -15,9 +15,6 @@ import {
   templateUrl: 'menu.html'
 })
 export class Menu {
-
-  @Output() onChange: EventEmitter<IStore> = new EventEmitter<IStore>();
-  @Output() closeDrawer: EventEmitter<IStore>;
   stores: Array<IStore> = [];
   currentStore: IStore = null;
 
@@ -25,13 +22,10 @@ export class Menu {
     private alertCtrl: AlertController,
     private actionSheetCtrl: ActionSheetController,
     private toastCtrl: ToastController) {
-    this.closeDrawer = new EventEmitter<IStore>();
     this.registerSubscribers();
   }
 
   selectStore = (e: Event, store: IStore) => {
-    this.onChange.emit(store);
-    this.closeDrawer.emit(null);
     this.factory.changeCurrentStore(store);
   }
 

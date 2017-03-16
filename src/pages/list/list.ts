@@ -20,8 +20,11 @@ export class List {
     private menuCtrl: MenuController,
     private modalCtrl: ModalController) {
     this.search = false;
-    this.factory.stores.subscribe((v) => {
-    });
+    this.registerSubscribers();
+  }
+
+  registerSubscribers = () => {
+    this.factory.currentStore.subscribe(this.changeCurrentStore);
   }
 
   toggleSearch = (e: Event) => {
@@ -32,8 +35,10 @@ export class List {
     console.log(e);
   }
 
-  changeCurrentStore(store: IStore) {
-    this.menuCtrl.close();
+  changeCurrentStore = (store: IStore) => {
+    if (this.menuCtrl) {
+      this.menuCtrl.close();
+    }
   }
 
   subscribeAddItem = (item: IItem) => {

@@ -10,7 +10,8 @@
     padding: 0px 15px;
     border-bottom: 1px solid $list-ios-border-color !important
   }
-  ion-item.ng-pristine.ng-touched {
+  ion-item.ng-pristine.ng-touched:not(.input-has-value),
+  ion-item.ng-dirty.ng-touched:not(.input-has-value) {
     .item-inner {
       border-bottom: 2px solid color($colors, danger);
       .label {
@@ -18,7 +19,8 @@
       }
     }
   }
-  ion-item.ng-pristine.ng-touched.input-has-focus {
+  ion-item.ng-pristine.ng-touched.input-has-focus,
+  ion-item.ng-dirty.ng-touched.input-has-focus {
     .item-inner {
       box-shadow: 0 -1px 0 0 color($colors, danger);
     }
