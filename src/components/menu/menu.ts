@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataFactory } from '../../providers/dataFactory';
 import { IStore } from '../../common/tgCore';
 import {
@@ -60,12 +60,10 @@ export class Menu {
   }
 
   private catchAddStoreError = (error) => {
-    console.log(error);
     this.toastCtrl.create(this.generateToastOptions(error, 0)).present();
   }
 
   private catchUpdateStoreError = (error) => {
-    console.log(error);
     this.toastCtrl.create(this.generateToastOptions(error, 0)).present();
   }
 
@@ -79,12 +77,10 @@ export class Menu {
   }
 
   private subscribeStores(stores: Array<IStore>) {
-    console.log(stores);
     this.stores = stores;
   }
 
   private subscribeCurrentStore = (current) => {
-    console.log('cs', current);
     this.currentStore = current;
   }
 
@@ -99,13 +95,11 @@ export class Menu {
           role: 'destructive',
           icon: 'trash',
           handler: () => {
-            console.log('Destructive clicked');
           }
         }, {
           text: 'Update',
           icon: 'create',
           handler: () => {
-            console.log('Archive clicked');
             this.addOrUpdateStore('UPDATE', store);
           }
         }, {
@@ -113,7 +107,6 @@ export class Menu {
           role: 'cancel',
           icon: 'close',
           handler: () => {
-            console.log('Cancel clicked');
           }
         }
       ]

@@ -34,5 +34,24 @@
     .item:last-child {
       border: 0px;
     }
+    .quantity-unit-block {
+      @include grid();
+      div:last-child {
+        min-width: 40px;
+        padding-left: 10px;
+      }
+    }
+    .item-button {
+      position: relative;
+      .item-checker {
+        position: absolute;
+        height: 2px;
+        background-color: #555555;
+        width: calc(100vw - 20px);
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+      }
+    }
   }
 }

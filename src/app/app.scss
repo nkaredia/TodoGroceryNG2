@@ -12,6 +12,14 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@mixin grid($vertical: center, $horizontal: center, $wrap: wrap) {
+  display: flex;
+  align-items: $vertical;
+  justify-content: $horizontal;
+  flex-wrap: $wrap;
+}
+
 .toast-success .toast-message {
   color: #388E3C;
 }
@@ -19,3 +27,5 @@
 .toast-error .toast-message {
   color: #f44336;
 }
+
+

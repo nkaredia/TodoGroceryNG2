@@ -29,10 +29,14 @@
 </ion-menu>
 <ion-content #content padding list-page>
   <ion-list no-lines class="store-item-list">
-    <ion-item-sliding #item>
-      <button ion-item detail-none>
-        <div item-left>Mango</div>
-        <div item-right>3 dz</div>
+    <ion-item-sliding *ngFor="let item of (factory.items | async)">
+      <button ion-item detail-none class="item-button" (click)="checkItem(item)">
+        <div item-left>{{item.name}}</div>
+        <div item-right class="quantity-unit-block">
+          <div>{{item.quantity}}</div>
+          <div>{{getUnitByIndex(item.unit)}}</div>
+        </div>
+        <div [ngClass]="{'item-checker': item.checked}"></div>
       </button>
       <ion-item-options side="right">
         <button ion-button color="danger">

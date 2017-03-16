@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { IStore, IItem, UNIT, TABLE } from '../common/tgCore';
+import { IStore, IItem, TABLE } from '../common/tgCore';
 import { IXDB } from '../providers/iXDb';
 import { Injectable } from '@angular/core';
 
@@ -23,13 +23,24 @@ export class DataFactory {
   // ITEM - Start
 
   async addNewItem(item: IItem): Promise<number> {
-    return await this.ixdb.addOne<IItem>(TABLE.ITEMS, item);
+    let index = await this.ixdb.addOne<IItem>(TABLE.ITEMS, item);
+    if (index > 0) {
+      this.getCurrentStoreItems();
+    }
+    return index;
   }
 
-  async getCurrentStoreItems(storeId: number) {
-    let items = await this.ixdb.getBulk<IItem>(TABLE.ITEMS, 'storeId', storeId);
+  async getCurrentStoreItems() {
+    let items = await this.ixdb.getBulk<IItem>(TABLE.ITEMS, 'storeId', this.currentStore.getValue().id);
     this.items.next(items);
     return items;
+  }
+
+  async updateItem(item: IItem) {
+    let index = await this.ixdb.addOrReplaceOne<IItem>(TABLE.ITEMS, item);
+    if(index > 0) {
+      this.getCurrentStoreItems();
+    }
   }
 
   // ITEM - End
@@ -37,8 +48,8 @@ export class DataFactory {
   // STORE - Start
 
   subscribeCurrentStore = (currentStore: IStore) => {
-    if(currentStore !== null) {
-      this.getCurrentStoreItems(currentStore.id);
+    if (currentStore !== null) {
+      this.getCurrentStoreItems();
     }
   }
 
@@ -70,7 +81,8 @@ export class DataFactory {
     if (index === 0) {
       throw new Error('Unable to create store');
     }
-    this.getAllStores();
+    await this.getAllStores();
+    this.setStoreInLocal(this.stores.getValue()[index - 1]);
     return index;
   }
 

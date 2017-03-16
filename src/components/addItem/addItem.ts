@@ -11,8 +11,7 @@ export class AddItem implements OnInit {
 
 
   constructor(private viewCtrl: ViewController) {
-    console.log(this.getUnits(), 'dsfsdsd');
-    
+
   }
 
   ngOnInit() {
@@ -33,9 +32,10 @@ export class AddItem implements OnInit {
   addNewItem = (form: NgForm) => {
     if (form.value &&
       (form.value.name === '' || form.value.quantity === '' || form.value.unit === '')) {
-        return;
+      return;
     }
     let item: IItem = form.value;
+    item.quantity = +item.quantity;
     this.viewCtrl.emit(item);
     this.viewCtrl.dismiss();
   }
