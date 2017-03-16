@@ -8,44 +8,46 @@ export class IXDB {
     this.createTables();
   }
 
-  async getAll<T>(table: TABLE): Promise<Array<T>> {
+  getAll = async <T>(table: TABLE): Promise<Array<T>> => {
     return await this.__db
       .table<T>(this.table(table))
       .toArray();
-  }
+  };
 
-  async getOnce<T>(table: TABLE, key: string, compareWith: any): Promise<T> {
+  getOnce = async <T>(table: TABLE, key: string, compareWith: any): Promise<T> => {
     return await this.__db
       .table<T>(this.table(table))
       .where(key)
       .equalsIgnoreCase(compareWith)
       .first();
-  }
+  };
 
-  async getBulk<T>(table: TABLE, key: string, compareWith: any): Promise<Array<T>> {
+  getBulk = async <T>(table: TABLE, key: string, compareWith: any): Promise<Array<T>> => {
     return await this.__db
-    .table<T>(this.table(table))
-    .where(key)
-    .equals(compareWith)
-    .toArray();
+      .table<T>(this.table(table))
+      .where(key)
+      .equals(compareWith)
+      .toArray();
   }
 
-  async addOne<T>(table: TABLE, object: T): Promise<number> {
+  addOne = async <T>(table: TABLE, object: T): Promise<number> => {
     return await this.__db
       .table<T>(this.table(table))
       .add(object);
   }
 
-  async addOrReplaceOne<T>(table: TABLE, object: T): Promise<number> {
+  addOrReplaceOne = async <T>(table: TABLE, object: T): Promise<number> => {
     return await this.__db
       .table<T>(this.table(table))
       .put(object);
   }
 
-  async removeOne(table: TABLE, index: number): Promise<void> {
+  removeOne = async <T>(table: TABLE, index: number): Promise<number> => {
     return await this.__db
-    .table(this.table(table))
-    .delete(index);
+      .table(this.table(table))
+      .where('id')
+      .equals(index)
+      .delete();
   }
 
   private createTables = () => {

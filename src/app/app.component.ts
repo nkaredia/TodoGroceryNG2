@@ -2,8 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { List } from '../pages/list/list';
-import { Menu } from '../components/menu/menu';
-
 @Component({
   templateUrl: 'app.html'
 })

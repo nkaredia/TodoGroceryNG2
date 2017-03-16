@@ -22,7 +22,7 @@ export class DataFactory {
 
   // ITEM - Start
 
-  async addNewItem(item: IItem): Promise<number> {
+  addNewItem = async (item: IItem): Promise<number> => {
     let index = await this.ixdb.addOne<IItem>(TABLE.ITEMS, item);
     if (index > 0) {
       this.getCurrentStoreItems();
@@ -30,17 +30,26 @@ export class DataFactory {
     return index;
   }
 
-  async getCurrentStoreItems() {
+  getCurrentStoreItems = async (): Promise<Array<IItem>> => {
     let items = await this.ixdb.getBulk<IItem>(TABLE.ITEMS, 'storeId', this.currentStore.getValue().id);
     this.items.next(items);
     return items;
   }
 
-  async updateItem(item: IItem) {
+  updateItem = async (item: IItem): Promise<number> => {
     let index = await this.ixdb.addOrReplaceOne<IItem>(TABLE.ITEMS, item);
-    if(index > 0) {
+    if (index > 0) {
       this.getCurrentStoreItems();
     }
+    return index;
+  }
+
+  deleteItem = async (item: IItem): Promise<number> => {
+    let index = await this.ixdb.removeOne<IItem>(TABLE.ITEMS, item.id);
+    if (index > 0) {
+      this.getCurrentStoreItems();
+    }
+    return index;
   }
 
   // ITEM - End
@@ -61,7 +70,7 @@ export class DataFactory {
     this.setStoreInLocal(store);
   }
 
-  async updateStore(store: IStore): Promise<number> {
+  updateStore = async (store: IStore): Promise<number> => {
     if (await this.ixdb.getOnce(TABLE.STORES, 'name', store.name)) {
       throw new Error('Store already exists');
     }
@@ -69,11 +78,12 @@ export class DataFactory {
     if (index === 0) {
       throw new Error('Unable to update store');
     }
-    this.getAllStores();
+    await this.getAllStores();
+    this.setStoreInLocal(this.stores.getValue()[index - 1]);
     return index;
   }
 
-  async addNewStore(store: IStore): Promise<number> {
+  addNewStore = async (store: IStore): Promise<number> => {
     if (await this.ixdb.getOnce(TABLE.STORES, 'name', store.name)) {
       throw new Error('Store already exists');
     }
@@ -86,7 +96,7 @@ export class DataFactory {
     return index;
   }
 
-  private getStoreFromLocal = () => {
+  private getStoreFromLocal = (): IStore => {
     return JSON.parse(localStorage.getItem('currentStore'));
   }
 
@@ -95,13 +105,13 @@ export class DataFactory {
     this.currentStore.next(store);
   }
 
-  private async getAllStores(): Promise<Array<IStore>> {
+  private getAllStores = async (): Promise<Array<IStore>> => {
     let __stores = await this.ixdb.getAll<IStore>(TABLE.STORES);
     this.stores.next(__stores);
     return __stores;
   }
 
-  private async initializeFirstTimeDatabase() {
+  private initializeFirstTimeDatabase = async () => {
     let stores: Array<IStore> = await this.ixdb.getAll<IStore>(TABLE.STORES);
     if (!stores || stores.length === 0) {
       let index = await this.ixdb.addOne<IStore>(TABLE.STORES, { name: 'Untitled Store' });

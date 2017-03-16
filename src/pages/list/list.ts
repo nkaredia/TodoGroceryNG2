@@ -44,12 +44,16 @@ export class List {
   subscribeAddItem = async (item: IItem) => {
     item.checked = false;
     item.storeId = this.factory.currentStore.getValue().id;
-    await this.factory.addNewItem(item);
+    this.factory.addNewItem(item);
   };
 
   checkItem = (item: IItem) => {
     item.checked = !item.checked;
     this.factory.updateItem(item);
+  }
+
+  deleteItem = (item: IItem) => {
+    this.factory.deleteItem(item);
   }
 
   subscribeItems = (items: Array<IItem>) => {
