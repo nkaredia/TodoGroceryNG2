@@ -10,8 +10,8 @@
     padding: 0px 15px;
     border-bottom: 1px solid $list-ios-border-color !important
   }
-  ion-item.ng-pristine.ng-touched:not(.input-has-value),
-  ion-item.ng-dirty.ng-touched:not(.input-has-value) {
+  ion-item.item-md.ng-pristine.ng-touched:not(.input-has-value),
+  ion-item.item-md.ng-dirty.ng-touched:not(.input-has-value) {
     .item-inner {
       border-bottom: 2px solid color($colors, danger);
       .label {
@@ -19,10 +19,26 @@
       }
     }
   }
-  ion-item.ng-pristine.ng-touched.input-has-focus,
-  ion-item.ng-dirty.ng-touched.input-has-focus {
+  ion-item.item-md.ng-pristine.ng-touched.input-has-focus,
+  ion-item.item-md.ng-dirty.ng-touched.input-has-focus {
     .item-inner {
       box-shadow: 0 -1px 0 0 color($colors, danger);
+    }
+  }
+  ion-item.item-ios.ng-pristine.ng-touched:not(.input-has-value),
+  ion-item.item-ios.ng-dirty.ng-touched:not(.input-has-value) {
+    border-bottom: 2px solid color($colors, danger);
+    .label {
+      color: color($colors, danger);
+    }
+  }
+  ion-item.item-wp.ng-pristine.ng-touched:not(.input-has-value),
+  ion-item.item-wp.ng-dirty.ng-touched:not(.input-has-value) {
+    input {
+      border: 2px solid color($colors, danger);
+    }
+    .label {
+      color: color($colors, danger);
     }
   }
 }
