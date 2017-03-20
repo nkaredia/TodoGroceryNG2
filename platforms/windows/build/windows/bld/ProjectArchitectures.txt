@@ -1,1 +1,0 @@
-D:\workspace\personal\in\TodoGroceryNG2\platforms\windows\CordovaApp.Windows10.jsproj;neutral
