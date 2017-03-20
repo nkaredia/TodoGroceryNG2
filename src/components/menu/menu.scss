@@ -1,0 +1,28 @@
+tg-menu {
+  ion-list-header {
+    margin-bottom: 0px !important;
+    margin-top: 13px;
+    border: 0 !important;
+  }
+  .list-ios {
+    margin-top: 47px !important;
+  }
+  .item-md.active {
+    background-color: $list-md-activated-background-color;
+  }
+  .item-ios.active {
+    background-color: $list-ios-activated-background-color;
+  }
+  .item-wp.active {
+    background-color: $list-wp-activated-background-color;
+  }
+  [add-new-store] {
+    button {
+      margin: 0;
+      height: 6rem;
+      ion-icon {
+        font-size: 3rem;
+      }
+    }
+  }
+}
