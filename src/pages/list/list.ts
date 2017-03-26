@@ -4,9 +4,11 @@ import { IStore, IItem, UNIT } from '../../common/tgCore';
 import {
   NavController,
   MenuController,
-  ModalController
+  ModalController,
+  PopoverController
 } from 'ionic-angular';
 import { AddItem } from '../../components/addItem/addItem';
+import { Popover } from '../../components/popover/popover';
 
 @Component({
   selector: 'tg-list',
@@ -18,7 +20,8 @@ export class List {
   constructor(public navCtrl: NavController,
     private factory: DataFactory,
     private menuCtrl: MenuController,
-    private modalCtrl: ModalController) {
+    private modalCtrl: ModalController,
+    private popoverCtrl: PopoverController) {
     this.search = false;
     this.registerSubscribers();
   }
@@ -67,6 +70,14 @@ export class List {
 
   getUnitByIndex = (unit: UNIT) => {
     return UNIT[unit].toLowerCase();
+  }
+
+  openPopover = (e: Event) => {
+    console.log('csdcsdcsc');
+    let popover = this.popoverCtrl.create(Popover);
+    popover.present({
+      ev: e
+    });
   }
 
 }

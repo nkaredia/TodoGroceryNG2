@@ -11,12 +11,16 @@ export class DataFactory {
   public readonly currentStore: BehaviorSubject<IStore>;
   public readonly items: BehaviorSubject<Array<IItem>>;
 
+  public theme: BehaviorSubject<string>;
+
   constructor(private ixdb: IXDB) {
     this.stores = new BehaviorSubject<Array<IStore>>([]);
     this.currentStore = new BehaviorSubject<IStore>(null);
     this.items = new BehaviorSubject<Array<IItem>>([]);
+    this.applyInitialTheme();
     this.initializeFirstTimeDatabase();
-    this.currentStore.subscribe(this.subscribeCurrentStore)
+    this.currentStore.subscribe(this.subscribeCurrentStore);
+    this.theme.subscribe(this.themeSubscriber);
   }
 
 
@@ -94,6 +98,24 @@ export class DataFactory {
     await this.getAllStores();
     this.setStoreInLocal(this.stores.getValue()[index - 1]);
     return index;
+  }
+
+  changeTheme = (theme: string) => {
+    this.theme.next(theme);
+  }
+
+  private themeSubscriber = (value: string) => {
+    window.document.body.setAttribute('theme', value);
+    localStorage.setItem('theme', value);
+  }
+
+  private applyInitialTheme = () => {
+    let localTheme = localStorage.getItem('theme');
+    if (localTheme === null) {
+      this.theme = new BehaviorSubject<string>('md-blue');
+    } else {
+      this.theme = new BehaviorSubject<string>(localTheme);
+    }
   }
 
   private getStoreFromLocal = (): IStore => {

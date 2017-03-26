@@ -15,7 +15,7 @@
     .item-inner {
       border-bottom: 2px solid color($colors, danger);
       .label {
-        color: color($colors, danger);
+        color: color($colors, danger) !important;
       }
     }
   }

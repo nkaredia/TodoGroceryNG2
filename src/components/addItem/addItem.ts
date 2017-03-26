@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ViewController } from 'ionic-angular';
 import { UNIT, IItem } from '../../common/tgCore';
+import { DataFactory } from '../../providers/dataFactory';
 
 @Component({
   selector: 'tg-add-item',
@@ -10,7 +11,8 @@ import { UNIT, IItem } from '../../common/tgCore';
 export class AddItem implements OnInit {
 
 
-  constructor(private viewCtrl: ViewController) {
+  constructor(private viewCtrl: ViewController,
+    private factory: DataFactory) {
 
   }
 

@@ -1,5 +1,5 @@
 <ion-header app-toolbar>
-  <ion-toolbar color="primary" *ngIf="!search">
+  <ion-toolbar [color]="factory.theme | async" theme *ngIf="!search">
     <ion-buttons start>
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
@@ -10,12 +10,12 @@
       <button ion-button icon-only (click)="toggleSearch($event)">
         <ion-icon name="search"></ion-icon>
       </button>
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="openPopover($event)">
         <ion-icon name="md-more"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar color="primary" *ngIf="search">
+  <ion-toolbar [color]="factory.theme | async" *ngIf="search">
     <ion-buttons start search-back-button>
       <button ion-button icon-only (click)="toggleSearch($event)">
         <ion-icon name="arrow-back"></ion-icon>
@@ -27,7 +27,7 @@
 <ion-menu [content]="content">
   <tg-menu></tg-menu>
 </ion-menu>
-<ion-content #content padding list-page>
+<ion-content #popoverContent #content padding list-page>
   <ion-list no-lines class="store-item-list">
     <ion-item-sliding *ngFor="let item of (factory.items | async)">
       <button ion-item detail-none class="item-button" (click)="checkItem(item)">
@@ -47,6 +47,6 @@
     </ion-item-sliding>
   </ion-list>
   <ion-fab right bottom>
-    <button (click)="addNewItem($event)" ion-fab color="primary"><ion-icon name="add"></ion-icon></button>
+    <button (click)="addNewItem($event)" ion-fab [color]="factory.theme | async"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>

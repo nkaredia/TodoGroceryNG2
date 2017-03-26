@@ -6,13 +6,15 @@ import { Menu } from '../components/menu/menu';
 import { DataFactory } from '../providers/dataFactory';
 import { IXDB } from '../providers/iXDb';
 import { AddItem } from '../components/addItem/addItem';
+import { Popover } from '../components/popover/popover';
 
 @NgModule({
   declarations: [
     MyApp,
     List,
     Menu,
-    AddItem
+    AddItem,
+    Popover
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -22,7 +24,8 @@ import { AddItem } from '../components/addItem/addItem';
     MyApp,
     List,
     Menu,
-    AddItem
+    AddItem,
+    Popover
   ],
   providers: [IXDB, DataFactory]
 })
