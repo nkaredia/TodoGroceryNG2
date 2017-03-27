@@ -25,6 +25,11 @@ hooks/
 platforms/
 plugins/
 $RECYCLE.BIN/
+www/assets/
+www/build/
+www/index.html
+www/manifest.json
+www/service-worker.js
 
 .DS_Store
 Thumbs.db
