@@ -1,0 +1,53 @@
+tg-menu {
+  ion-list-header {
+    margin-bottom: 0px !important;
+    margin-top: 13px;
+    border: 0 !important;
+  }
+  .list-ios {
+    margin-top: 47px !important;
+  }
+  [add-new-store] {
+    button {
+      margin: 0;
+      height: 6rem;
+      ion-icon {
+        font-size: 3rem;
+      }
+    }
+  }
+}
+
+@mixin applyMenuTheme($theme) {
+  tg-menu {
+    .item-md.active {
+      background-color: $theme
+    }
+    .item-ios.active {
+      background-color: $theme
+    }
+    .item-wp.active {
+      background-color: $theme;
+    }
+  }
+}
+
+body[theme="md-green"] {
+  @include applyMenuTheme(color($colors, md-green-alpha));
+}
+
+body[theme="md-blue"] {
+  @include applyMenuTheme(color($colors, md-blue-alpha));
+}
+
+body[theme="md-red"] {
+  @include applyMenuTheme(color($colors, md-red-alpha));
+}
+
+body[theme="md-purple"] {
+  @include applyMenuTheme(color($colors, md-purple-alpha));
+}
+
+body[theme="md-grey"] {
+  @include applyMenuTheme(color($colors, md-grey-alpha));
+}

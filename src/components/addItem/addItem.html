@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar [color]="factory.theme | async">
+    <ion-title>Add Item</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="closeModal($event)">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content add-item-content>
+  <form #f="ngForm" novalidate>
+    <ion-list inset>
+
+      <ion-item>
+        <ion-label [color]="factory.theme | async" floating>Item Name</ion-label>
+        <ion-input type="text" name="name" ngModel #name="ngModel" maxlength="20"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label [color]="factory.theme | async" floating>Quantity</ion-label>
+        <ion-input type="number" name="quantity" ngModel #quantity="ngModel"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label [color]="factory.theme | async">Unit</ion-label>
+        <ion-select name="unit" ngModel #unit="ngModel" class="helloworld">
+          <ion-option *ngFor="let u of getUnits()" value='{{u}}' theme>{{getUnitByKey(u)}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <div padding>
+      <button ion-button block [color]="factory.theme | async" (click)="addNewItem(f)">Add</button>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,25 @@
+<ion-content tg-popover>
+  <ion-list no-lines>
+    <button ion-item>Button</button>
+    <button ion-item>Button</button>
+    <button ion-item>Button</button>
+    <button ion-item>Button</button>
+    <ion-item tg-theme-select>
+      <div tg-theme-item-border (click)="changeTheme('md-blue')">
+        <div tg-theme-item-color blue></div>
+      </div>
+      <div tg-theme-item-border (click)="changeTheme('md-green')">
+        <div tg-theme-item-color green></div>
+      </div>
+      <div tg-theme-item-border (click)="changeTheme('md-red')">
+        <div tg-theme-item-color red></div>
+      </div>
+      <div tg-theme-item-border (click)="changeTheme('md-purple')">
+        <div tg-theme-item-color purple></div>
+      </div>
+      <div tg-theme-item-border (click)="changeTheme('md-grey')">
+        <div tg-theme-item-color grey></div>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,22 @@
+<ion-content>
+  <ion-list no-lines>
+    <ion-list-header>
+      STORES
+    </ion-list-header>
+
+    <button ion-item *ngFor="let store of (factory.stores | async)" 
+            (click)="selectStore($event, store)" 
+            [ngClass]="{'active': currentStore && currentStore.name === store.name}"
+            (press)="openStoreOptions(store)">
+            <div class="abs-border" ></div>
+      <ion-icon hideWhen="ios" name="ios-arrow-forward" item-right></ion-icon>
+      {{store.name}}
+    </button>
+  </ion-list>
+</ion-content>
+<ion-footer add-new-store>
+  <button ion-button icon-left [color]="factory.theme | async" full (click)="addOrUpdateStore('Add')">
+    <ion-icon name="add"></ion-icon>
+      Add new Store
+  </button>
+</ion-footer>

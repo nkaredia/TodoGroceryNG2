@@ -1,0 +1,52 @@
+<ion-header app-toolbar>
+  <ion-toolbar [color]="factory.theme | async" theme *ngIf="!search">
+    <ion-buttons start>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Todo Grocery</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="toggleSearch($event)">
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="openPopover($event)">
+        <ion-icon name="md-more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar [color]="factory.theme | async" *ngIf="search">
+    <ion-buttons start search-back-button>
+      <button ion-button icon-only (click)="toggleSearch($event)">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-searchbar (input)="searchFor($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-menu [content]="content">
+  <tg-menu></tg-menu>
+</ion-menu>
+<ion-content #popoverContent #content padding list-page>
+  <ion-list no-lines class="store-item-list">
+    <ion-item-sliding *ngFor="let item of (factory.items | async)">
+      <button ion-item detail-none class="item-button" (click)="checkItem(item)">
+        <div item-left>{{item.name}}</div>
+        <div item-right class="quantity-unit-block">
+          <div>{{item.quantity}}</div>
+          <div>{{getUnitByIndex(item.unit)}}</div>
+        </div>
+        <div [ngClass]="{'item-checker': item.checked}"></div>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="deleteItem(item)">
+        <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-fab right bottom>
+    <button (click)="addNewItem($event)" ion-fab [color]="factory.theme | async"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>
