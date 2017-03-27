@@ -8,7 +8,7 @@
     "build": "ionic-app-scripts build",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "restore": "ionic state restore --plugins && ionic state restore --platforms"
+    "restore": "ionic state restore --plugins && ionic platform add android"
   },
   "dependencies": {
     "@angular/common": "2.2.1",
