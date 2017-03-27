@@ -1,4 +1,4 @@
-import { Component, ViewChild, enableProdMode } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { List } from '../pages/list/list';
