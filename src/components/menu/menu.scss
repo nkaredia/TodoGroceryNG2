@@ -7,15 +7,6 @@ tg-menu {
   .list-ios {
     margin-top: 47px !important;
   }
-  .item-md.active {
-    background-color: $list-md-activated-background-color;
-  }
-  .item-ios.active {
-    background-color: $list-ios-activated-background-color;
-  }
-  .item-wp.active {
-    background-color: $list-wp-activated-background-color;
-  }
   [add-new-store] {
     button {
       margin: 0;
@@ -25,4 +16,38 @@ tg-menu {
       }
     }
   }
+}
+
+@mixin applyMenuTheme($theme) {
+  tg-menu {
+    .item-md.active {
+      background-color: $theme
+    }
+    .item-ios.active {
+      background-color: $theme
+    }
+    .item-wp.active {
+      background-color: $theme;
+    }
+  }
+}
+
+body[theme="md-green"] {
+  @include applyMenuTheme(color($colors, md-green-alpha));
+}
+
+body[theme="md-blue"] {
+  @include applyMenuTheme(color($colors, md-blue-alpha));
+}
+
+body[theme="md-red"] {
+  @include applyMenuTheme(color($colors, md-red-alpha));
+}
+
+body[theme="md-purple"] {
+  @include applyMenuTheme(color($colors, md-purple-alpha));
+}
+
+body[theme="md-grey"] {
+  @include applyMenuTheme(color($colors, md-grey-alpha));
 }

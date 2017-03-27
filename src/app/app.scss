@@ -41,11 +41,43 @@
       }
     }
   }
+  .active {
+    .abs-border {
+      position: absolute;
+      width: 5px;
+      height: 100%;
+      background: $theme;
+      top: 0;
+      left: 0;
+    }
+  }
 }
 
-@mixin iosTheme($theme) {}
+@mixin iosTheme($theme) { 
+  .active {
+    .abs-border {
+      position: absolute;
+      width: 5px;
+      height: 100%;
+      background: $theme;
+      top: 0;
+      left: 0;
+    }
+  }
+}
 
-@mixin wpTheme($theme) {}
+@mixin wpTheme($theme) {
+  .active {
+    .abs-border {
+      position: absolute;
+      width: 5px;
+      height: 100%;
+      background: $theme;
+      top: 0;
+      left: 0;
+    }
+  }
+}
 
 @mixin applyTheme($theme) {
   .platform-android {
