@@ -19,7 +19,7 @@
 
       <ion-item>
         <ion-label [color]="factory.theme | async" floating>Quantity</ion-label>
-        <ion-input type="number" name="quantity" ngModel #quantity="ngModel"></ion-input>
+        <ion-input type="number" name="quantity" ngModel #quantity="ngModel" (keypress)="validateQuantity($event, f)"></ion-input>
       </ion-item>
 
       <ion-item>

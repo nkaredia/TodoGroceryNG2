@@ -53,7 +53,22 @@
   }
 }
 
-@mixin iosTheme($theme) { 
+@mixin iosTheme($theme) {
+  ion-alert {
+    .alert-button {
+      color: $theme;
+    }
+    .alert-radio {
+      .alert-radio-icon {
+        .alert-radio-inner {
+          border-color: $theme;
+        }
+      }
+      .alert-radio-label {
+        color: $theme;
+      }
+    }
+  }
   .active {
     .abs-border {
       position: absolute;
@@ -67,6 +82,39 @@
 }
 
 @mixin wpTheme($theme) {
+  ion-alert {
+    .alert-wrapper {
+      border-color: $theme;
+    }
+    .alert-button {
+      color: $theme;
+    }
+    .alert-input {
+      border-color: $theme;
+    }
+    .alert-radio {
+      .alert-radio-icon {
+        .alert-radio-inner {
+          background: $theme;
+        }
+      }
+      .alert-radio-label {
+        color: $theme;
+      }
+    }
+  }
+  .item-input.input-has-focus {
+    .item-inner {
+      .label[floating] {
+        color: $theme !important;
+      }
+      .input-wp {
+        input {
+          border-color: $theme;
+        }
+      }
+    }
+  }
   .active {
     .abs-border {
       position: absolute;
@@ -86,7 +134,7 @@
   .platform-ios {
     @include iosTheme($theme);
   }
-  .platform-wp {
+  .platform-windows {
     @include wpTheme($theme);
   }
 }

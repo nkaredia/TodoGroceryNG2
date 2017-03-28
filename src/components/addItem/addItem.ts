@@ -30,6 +30,21 @@ export class AddItem implements OnInit {
   getUnits = () => {
     return Object.keys(UNIT).filter(i => isNaN(Number(UNIT[i])));
   }
+  
+  validateQuantity = (e: KeyboardEvent, f: NgForm) => {
+    console.log(e);
+    let num = Number(e.key);
+    if(!isNaN(num) && Number(f.value.quantity) <= 9999999) {
+      f.value.quantity += String(num);
+      console.log(f.value);
+    } else {
+      e.preventDefault();
+    }
+    // let num = Number(quantity);
+    // if (!isNaN(num) && num <= 9999999999) {
+    //   model['value'] = num;
+    // }
+  }
 
   addNewItem = (form: NgForm) => {
     if (form.value &&
@@ -41,5 +56,5 @@ export class AddItem implements OnInit {
     this.viewCtrl.emit(item);
     this.viewCtrl.dismiss();
   }
-
+ 
 }
