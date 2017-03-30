@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataFactory } from '../../providers/dataFactory';
-import { IStore, IItem, UNIT, SearchForPipe } from '../../common/tgCore';
+import { IStore, IItem, UNIT } from '../../common/tgCore';
 import {
   NavController,
   MenuController,

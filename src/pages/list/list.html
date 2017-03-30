@@ -21,7 +21,7 @@
         <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-searchbar (input)="searchFor($event)"></ion-searchbar>
+    <ion-searchbar (ionInput)="searchFor($event)" (ionCancel)="searchFor($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-menu [content]="content">

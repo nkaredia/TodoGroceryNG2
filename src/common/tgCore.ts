@@ -34,13 +34,19 @@ export enum TABLE {
   name: 'searchFor'
 })
 export class SearchForPipe implements PipeTransform {
-  transform(items: Array<IItem>, searchQuery: Array<string>) {
-    return items.filter((item) => {
-      if (searchQuery && searchQuery[0] && searchQuery[0].length > 0) {
-        return item.name.toLowerCase().startsWith(searchQuery[0])
-      } else {
-        return true;
-      }
-    });
+  transform(items: Array<IItem>, searchQuery: string) {
+    // return items.filter((item) => {
+    //   if (searchQuery && searchQuery[0] && searchQuery[0].length > 0) {
+    //     return item.name.toLowerCase().startsWith(searchQuery[0].toLowerCase());
+    //   } else {
+    //     return true;
+    //   }
+    // });
+    if (items && items.length > 0 && searchQuery && searchQuery.length > 0) {
+      return items.filter((item) => {
+        return item.name.toLowerCase().startsWith(searchQuery.toLowerCase());
+      });
+    }
+    return items;
   }
 }
