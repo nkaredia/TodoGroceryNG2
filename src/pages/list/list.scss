@@ -9,10 +9,15 @@
     }
   }
   .bar-buttons-ios[end] {
-    width: 56px;
+    width: 85px;
     display: flex;
     justify-content: space-between;
     margin-right: 8px;
+  }
+  .bar-buttons[end]:not(.bar-buttons-ios) {
+    button:first-child {
+      margin-right: 10px;
+    }
   }
 }
 

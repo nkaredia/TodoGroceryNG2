@@ -74,7 +74,6 @@ export class List {
   }
 
   openPopover = (e: Event) => {
-    console.log('csdcsdcsc');
     let popover = this.popoverCtrl.create(Popover);
     popover.present({
       ev: e
