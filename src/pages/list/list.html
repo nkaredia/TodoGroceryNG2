@@ -29,7 +29,7 @@
 </ion-menu>
 <ion-content #popoverContent #content padding list-page>
   <ion-list no-lines class="store-item-list">
-    <ion-item-sliding *ngFor="let item of (factory.items | async)">
+    <ion-item-sliding *ngFor="let item of (factory.items | async) | searchFor:searchQuery">
       <button ion-item detail-none class="item-button" (click)="checkItem(item)">
         <div item-left>{{item.name}}</div>
         <div item-right class="quantity-unit-block">

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataFactory } from '../../providers/dataFactory';
-import { IStore, IItem, UNIT } from '../../common/tgCore';
+import { IStore, IItem, UNIT, SearchForPipe } from '../../common/tgCore';
 import {
   NavController,
   MenuController,
@@ -16,7 +16,7 @@ import { Popover } from '../../components/popover/popover';
 })
 export class List {
   search: boolean;
-
+  searchQuery: string;
   constructor(public navCtrl: NavController,
     private factory: DataFactory,
     private menuCtrl: MenuController,
@@ -36,6 +36,7 @@ export class List {
   };
 
   searchFor = (e: Event) => {
+    this.searchQuery = e.srcElement['value'];
   };
 
   changeCurrentStore = (store: IStore) => {
