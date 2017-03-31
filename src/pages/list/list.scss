@@ -21,6 +21,70 @@
   }
 }
 
+[item-select-toolbar] {
+  ion-buttons[start] {
+    margin: 0;
+    margin-left: 12px;
+    margin-right: 12px;
+    @include grid();
+  }
+  ion-buttons[end] {
+    @include grid();
+    [ion-button]:first-child {
+      ion-icon {
+        padding-bottom: 4px;
+        padding-right: 6px;
+        font-size: 1.8em;
+      }
+    }
+  }
+}
+
+// @mixin applyToolbarTheme($theme) {
+//   [item-select-toolbar] {
+//     ion-buttons[start] {
+//       .checkbox-md {
+//         .checkbox-icon {
+//           border-color: $theme;
+//         }
+//         .checkbox-icon.checkbox-checked {
+//           background-color: $theme;
+//         }
+//       }
+//       .checkbox-ios {
+//         .checkbox-icon {
+//           border-color: $theme;
+//         }
+//         .checkbox-icon.checkbox-checked {
+//           background-color: $theme;
+//         }
+//       }
+//       .checkbox-wp {
+//         .checkbox-icon {
+//           border-color: $theme;
+//         }
+//         .checkbox-icon.checkbox-checked {
+//           background-color: $theme;
+//         }
+//       }
+//     }
+//   }
+// }
+// body[theme="md-green"] {
+//   @include applyToolbarTheme(color($colors, md-green-dark));
+// }
+// body[theme="md-blue"] {
+//   @include applyToolbarTheme(color($colors, md-blue-dark));
+// }
+// body[theme="md-red"] {
+//   @include applyToolbarTheme(color($colors, md-red-dark));
+// }
+// body[theme="md-purple"] {
+//   @include applyToolbarTheme(color($colors, md-purple-dark));
+// }
+// body[theme="md-grey"] {
+//   @include applyToolbarTheme(color($colors, md-grey-dark));
+// }
 [list-page] {
   padding: 0px !important;
   .scroll-content {
@@ -38,6 +102,12 @@
     }
     .item:last-child {
       border: 0px;
+    }
+    [item-name-block] {
+      @include grid();
+      ion-checkbox {
+        margin-left: 0px;
+      }
     }
     .quantity-unit-block {
       @include grid();

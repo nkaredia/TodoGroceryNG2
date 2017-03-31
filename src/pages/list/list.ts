@@ -9,6 +9,7 @@ import {
 } from 'ionic-angular';
 import { AddItem } from '../../components/addItem/addItem';
 import { Popover } from '../../components/popover/popover';
+import { ItemPopover } from '../../components/itemPopover/itemPopover';
 
 @Component({
   selector: 'tg-list',
@@ -17,12 +18,14 @@ import { Popover } from '../../components/popover/popover';
 export class List {
   search: boolean;
   searchQuery: string;
+  selectItemInProgress: boolean;
   constructor(public navCtrl: NavController,
     private factory: DataFactory,
     private menuCtrl: MenuController,
     private modalCtrl: ModalController,
     private popoverCtrl: PopoverController) {
     this.search = false;
+    this.selectItemInProgress = false;
     this.registerSubscribers();
   }
 
@@ -52,8 +55,11 @@ export class List {
   };
 
   checkItem = (item: IItem) => {
-    item.checked = !item.checked;
-    this.factory.updateItem(item);
+    if (!this.selectItemInProgress) {
+      item.checked = !item.checked;
+      this.factory.updateItem(item);
+    }
+
   }
 
   deleteItem = (item: IItem) => {
@@ -78,6 +84,24 @@ export class List {
     popover.present({
       ev: e
     });
+  }
+
+  openItemPopover = (e: Event) => {
+    let popover = this.popoverCtrl.create(ItemPopover);
+    popover.present({
+      ev: e
+    });
+  }
+
+  enableSelectItems = (e: Event, item: IItem) => {
+    e.preventDefault();
+    console.log('item long press', e);
+    this.selectItemInProgress = true;
+
+  }
+
+  disableSelectItems = (e: Event) => {
+    this.selectItemInProgress = false;
   }
 
 }

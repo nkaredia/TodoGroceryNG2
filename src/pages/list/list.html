@@ -1,5 +1,5 @@
 <ion-header app-toolbar>
-  <ion-toolbar [color]="factory.theme | async" theme *ngIf="!search">
+  <ion-toolbar [color]="factory.theme | async" theme *ngIf="!search && !selectItemInProgress">
     <ion-buttons start>
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
@@ -7,7 +7,7 @@
     </ion-buttons>
     <ion-title>Todo Grocery</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="toggleSearch($event)">
+      <button ion-button icon-only (click)="openItemPopover($event)">
         <ion-icon name="ios-arrow-down"></ion-icon>
       </button>
       <button ion-button icon-only (click)="toggleSearch($event)">
@@ -26,6 +26,21 @@
     </ion-buttons>
     <ion-searchbar (ionInput)="searchFor($event)" (ionCancel)="searchFor($event)"></ion-searchbar>
   </ion-toolbar>
+  <ion-toolbar item-select-toolbar color="full-light" *ngIf="!search && selectItemInProgress">
+    <ion-buttons start>
+      <ion-checkbox [color]="factory.theme | async" checked="true"></ion-checkbox>
+    </ion-buttons>
+    <ion-title>Select All</ion-title>
+    <ion-buttons end>
+      <button ion-button>
+        <ion-icon color="danger" name="trash"></ion-icon>
+        Delete
+      </button>
+      <button ion-button icon-only (click)="disableSelectItems($event)">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-menu [content]="content">
   <tg-menu></tg-menu>
@@ -33,8 +48,13 @@
 <ion-content #popoverContent #content padding list-page>
   <ion-list no-lines class="store-item-list">
     <ion-item-sliding *ngFor="let item of (factory.items | async) | searchFor:searchQuery">
-      <button ion-item detail-none class="item-button" (click)="checkItem(item)">
-        <div item-left>{{item.name}}</div>
+      <button ion-item detail-none class="item-button" (click)="checkItem(item)"  (press)="enableSelectItems($event, item)">
+        <div item-left item-name-block>
+          <div>
+            <ion-checkbox [color]="factory.theme | async" checked="false" *ngIf="selectItemInProgress"></ion-checkbox>
+          </div>
+          <div>{{item.name}}</div>
+        </div>
         <div item-right class="quantity-unit-block">
           <div>{{item.quantity}}</div>
           <div>{{getUnitByIndex(item.unit)}}</div>

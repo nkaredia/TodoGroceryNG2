@@ -1,0 +1,15 @@
+[tg-item-popover] {
+  padding: 5px 0px;
+  ion-list {
+    margin: 0px !important;
+    .ion-item,
+    .item {
+      border-top: 1px solid color($colors, light) !important;
+      min-height: 46px;
+    }
+    .ion-item:last-child,
+    .item:last-child {
+      border-bottom: 1px solid color($colors, light) !important;
+    }
+  }
+}

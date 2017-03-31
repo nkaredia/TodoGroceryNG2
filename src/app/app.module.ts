@@ -8,6 +8,7 @@ import { IXDB } from '../providers/iXDb';
 import { AddItem } from '../components/addItem/addItem';
 import { Popover } from '../components/popover/popover';
 import {SearchForPipe} from '../common/tgCore';
+import { ItemPopover } from '../components/itemPopover/itemPopover';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {SearchForPipe} from '../common/tgCore';
     Menu,
     AddItem,
     Popover,
-    SearchForPipe
+    SearchForPipe,
+    ItemPopover
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -27,7 +29,8 @@ import {SearchForPipe} from '../common/tgCore';
     List,
     Menu,
     AddItem,
-    Popover
+    Popover,
+    ItemPopover
   ],
   providers: [IXDB, DataFactory]
 })
