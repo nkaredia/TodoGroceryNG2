@@ -8,8 +8,12 @@
       width: 56px;
     }
   }
+  [main-toolbar] {
+    .bar-buttons-ios[end] {
+      width: 85px;
+    }
+  }
   .bar-buttons-ios[end] {
-    width: 85px;
     display: flex;
     justify-content: space-between;
     margin-right: 8px;
@@ -17,6 +21,16 @@
   .bar-buttons[end]:not(.bar-buttons-ios) {
     button:first-child {
       margin-right: 10px;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  [app-toolbar] {
+    ion-title {
+      * {
+        text-align: left;
+      }
     }
   }
 }
@@ -37,54 +51,12 @@
         font-size: 1.8em;
       }
     }
+    .bar-button-ios[ion-button]:first-child {
+      margin-right: 15px;
+    }
   }
 }
 
-// @mixin applyToolbarTheme($theme) {
-//   [item-select-toolbar] {
-//     ion-buttons[start] {
-//       .checkbox-md {
-//         .checkbox-icon {
-//           border-color: $theme;
-//         }
-//         .checkbox-icon.checkbox-checked {
-//           background-color: $theme;
-//         }
-//       }
-//       .checkbox-ios {
-//         .checkbox-icon {
-//           border-color: $theme;
-//         }
-//         .checkbox-icon.checkbox-checked {
-//           background-color: $theme;
-//         }
-//       }
-//       .checkbox-wp {
-//         .checkbox-icon {
-//           border-color: $theme;
-//         }
-//         .checkbox-icon.checkbox-checked {
-//           background-color: $theme;
-//         }
-//       }
-//     }
-//   }
-// }
-// body[theme="md-green"] {
-//   @include applyToolbarTheme(color($colors, md-green-dark));
-// }
-// body[theme="md-blue"] {
-//   @include applyToolbarTheme(color($colors, md-blue-dark));
-// }
-// body[theme="md-red"] {
-//   @include applyToolbarTheme(color($colors, md-red-dark));
-// }
-// body[theme="md-purple"] {
-//   @include applyToolbarTheme(color($colors, md-purple-dark));
-// }
-// body[theme="md-grey"] {
-//   @include applyToolbarTheme(color($colors, md-grey-dark));
-// }
 [list-page] {
   padding: 0px !important;
   .scroll-content {
