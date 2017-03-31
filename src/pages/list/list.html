@@ -28,7 +28,7 @@
   </ion-toolbar>
   <ion-toolbar item-select-toolbar color="full-light" *ngIf="!search && selectItemInProgress">
     <ion-buttons start>
-      <ion-checkbox [color]="factory.theme | async" checked="true"></ion-checkbox>
+      <ion-checkbox [color]="factory.theme | async" (click)="toggleSelectAllItems($event)" [checked]="toggleAllItems"></ion-checkbox>
     </ion-buttons>
     <ion-title>Select All</ion-title>
     <ion-buttons end>
@@ -51,7 +51,7 @@
       <button ion-item detail-none class="item-button" (click)="checkItem(item)"  (press)="enableSelectItems($event, item)">
         <div item-left item-name-block>
           <div>
-            <ion-checkbox [color]="factory.theme | async" checked="false" *ngIf="selectItemInProgress"></ion-checkbox>
+            <ion-checkbox [color]="factory.theme | async" (ionChange)="selectItem($event, item)" [checked]="allItemsSelected" *ngIf="selectItemInProgress"></ion-checkbox>
           </div>
           <div>{{item.name}}</div>
         </div>

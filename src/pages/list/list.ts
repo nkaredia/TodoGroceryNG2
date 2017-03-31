@@ -16,9 +16,13 @@ import { ItemPopover } from '../../components/itemPopover/itemPopover';
   templateUrl: 'list.html'
 })
 export class List {
-  search: boolean;
-  searchQuery: string;
-  selectItemInProgress: boolean;
+  private search: boolean;
+  private searchQuery: string;
+  private selectItemInProgress: boolean;
+  private selectedItemsToRemove: Array<IItem>;
+  private toggleAllItems: boolean;
+  private allItemsSelected: boolean;
+
   constructor(public navCtrl: NavController,
     private factory: DataFactory,
     private menuCtrl: MenuController,
@@ -26,6 +30,9 @@ export class List {
     private popoverCtrl: PopoverController) {
     this.search = false;
     this.selectItemInProgress = false;
+    this.selectedItemsToRemove = [];
+    this.toggleAllItems = false;
+    this.allItemsSelected = false;
     this.registerSubscribers();
   }
 
@@ -59,7 +66,6 @@ export class List {
       item.checked = !item.checked;
       this.factory.updateItem(item);
     }
-
   }
 
   deleteItem = (item: IItem) => {
@@ -102,6 +108,36 @@ export class List {
 
   disableSelectItems = (e: Event) => {
     this.selectItemInProgress = false;
+    this.selectedItemsToRemove = [];
   }
 
+  selectItem = (e: Event, item: IItem) => {
+    // let __item = this.selectedItemsToRemove.find(i => i.id === item.id);
+    // if (__item && !e['checked']) {
+    //   this.selectedItemsToRemove = this.selectedItemsToRemove.filter(i => i.id !== item.id);
+    //   this.allItemsSelected = false;
+    //   console.log('if not checked', this.selectedItemsToRemove, this.allItemsSelected);
+    // } else if (!__item && e['checked']) {
+    //   this.selectedItemsToRemove.push(item);
+    //   this.allItemsSelected = this.selectedItemsToRemove.length === this.factory.items.getValue().length;
+    //   console.log('if checked', this.selectedItemsToRemove, this.allItemsSelected);
+    // }
+    console.log('changed');
+    let __item = this.selectedItemsToRemove.find(i => i.id === item.id);
+    console.log("__item",__item);
+    if (!__item && e['checked']) {
+      console.log('item checked');
+      this.selectedItemsToRemove.push(item);
+    } else if (__item && !e['checked']) {
+      console.log('item unchecked');
+      this.selectedItemsToRemove = this.selectedItemsToRemove.filter(i => i.id !== item.id);
+    }
+    console.log('selectedItemsToRemove', this.selectedItemsToRemove);
+  }
+
+  toggleSelectAllItems = (e: Event, s) => {
+    this.toggleAllItems = !this.toggleAllItems;
+    this.allItemsSelected = this.toggleAllItems;
+    console.log('toggleAllItems', this.toggleAllItems);
+  }
 }
