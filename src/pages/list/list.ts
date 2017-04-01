@@ -112,32 +112,23 @@ export class List {
   }
 
   selectItem = (e: Event, item: IItem) => {
-    // let __item = this.selectedItemsToRemove.find(i => i.id === item.id);
-    // if (__item && !e['checked']) {
-    //   this.selectedItemsToRemove = this.selectedItemsToRemove.filter(i => i.id !== item.id);
-    //   this.allItemsSelected = false;
-    //   console.log('if not checked', this.selectedItemsToRemove, this.allItemsSelected);
-    // } else if (!__item && e['checked']) {
-    //   this.selectedItemsToRemove.push(item);
-    //   this.allItemsSelected = this.selectedItemsToRemove.length === this.factory.items.getValue().length;
-    //   console.log('if checked', this.selectedItemsToRemove, this.allItemsSelected);
-    // }
-    console.log('changed');
     let __item = this.selectedItemsToRemove.find(i => i.id === item.id);
-    console.log("__item",__item);
-    if (!__item && e['checked']) {
-      console.log('item checked');
+    let isChecked = e.srcElement.parentNode.previousSibling['classList'].contains('checkbox-checked');
+    if (!__item && isChecked) {
       this.selectedItemsToRemove.push(item);
-    } else if (__item && !e['checked']) {
-      console.log('item unchecked');
+      this.toggleAllItems = this.factory.items.getValue().length === this.selectedItemsToRemove.length ? true : false;
+    } else if (__item && !isChecked) {
       this.selectedItemsToRemove = this.selectedItemsToRemove.filter(i => i.id !== item.id);
+      this.toggleAllItems = false;
     }
-    console.log('selectedItemsToRemove', this.selectedItemsToRemove);
   }
 
-  toggleSelectAllItems = (e: Event, s) => {
-    this.toggleAllItems = !this.toggleAllItems;
-    this.allItemsSelected = this.toggleAllItems;
-    console.log('toggleAllItems', this.toggleAllItems);
+  toggleSelectAllItems = (e: Event, isChecked: boolean) => {
+    this.toggleAllItems = isChecked;
+    this.allItemsSelected = null;
+    setTimeout(() => {
+      this.allItemsSelected = isChecked;
+    }, 0);
+    this.selectedItemsToRemove = this.toggleAllItems ? this.factory.items.getValue() : [];
   }
 }
