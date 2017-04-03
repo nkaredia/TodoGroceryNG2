@@ -131,4 +131,10 @@ export class List {
     }, 0);
     this.selectedItemsToRemove = this.toggleAllItems ? this.factory.items.getValue() : [];
   }
+
+  deleteSelectedItems = (e: Event) => {
+    if (this.selectItemInProgress) {
+      this.factory.deleteBulkItems(this.selectedItemsToRemove);
+    }
+  }
 }

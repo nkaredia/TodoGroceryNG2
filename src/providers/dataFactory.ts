@@ -56,6 +56,13 @@ export class DataFactory {
     return index;
   }
 
+  deleteBulkItems = async (items: Array<IItem>): Promise<void> => {
+   let indexes = items.map(i => i.id);
+   await this.ixdb.removeBulk(TABLE.ITEMS, indexes);
+   await this.getCurrentStoreItems();
+   return void(0);
+  }
+
   // ITEM - End
 
   // STORE - Start
