@@ -35,13 +35,6 @@ export enum TABLE {
 })
 export class SearchForPipe implements PipeTransform {
   transform(items: Array<IItem>, searchQuery: string) {
-    // return items.filter((item) => {
-    //   if (searchQuery && searchQuery[0] && searchQuery[0].length > 0) {
-    //     return item.name.toLowerCase().startsWith(searchQuery[0].toLowerCase());
-    //   } else {
-    //     return true;
-    //   }
-    // });
     if (items && items.length > 0 && searchQuery && searchQuery.length > 0) {
       return items.filter((item) => {
         return item.name.toLowerCase().startsWith(searchQuery.toLowerCase());
@@ -49,4 +42,15 @@ export class SearchForPipe implements PipeTransform {
     }
     return items;
   }
+}
+
+export interface IAppSettings {
+  theme: string;
+  sortBy: ITEMSORT;
+}
+
+export enum ITEMSORT {
+  NAME = 1,
+  QUANTITY = 2,
+  UNIT = 3
 }

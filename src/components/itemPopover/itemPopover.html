@@ -1,7 +1,23 @@
 <ion-content tg-item-popover>
-  <ion-list no-lines>
-    <button ion-item>Sort by Name</button>
-    <button ion-item>Sort by Quantity</button>
-    <button ion-item>Sort by Unit</button>
+  <ion-list no-lines radio-group>
+    <ion-item-group>
+      <ion-item-divider color="light">Sort</ion-item-divider>
+      <ion-item>
+        <ion-label>Sort by Name</ion-label>
+        <ion-radio value="sortByName"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Sort by Quantity</ion-label>
+        <ion-radio value="sortByQuantity"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Sort by Unit</ion-label>
+        <ion-radio value="sortByUnit"></ion-radio>
+      </ion-item>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider color="light">Delete</ion-item-divider>
+      <button ion-item>Delete All</button>
+    </ion-item-group>
   </ion-list>
 </ion-content>

@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { IStore, IItem, TABLE } from '../common/tgCore';
+import { IStore, IItem, TABLE, IAppSettings, ITEMSORT } from '../common/tgCore';
 import { IXDB } from '../providers/iXDb';
 import { Injectable } from '@angular/core';
 
@@ -10,17 +10,16 @@ export class DataFactory {
   public readonly stores: BehaviorSubject<Array<IStore>>;
   public readonly currentStore: BehaviorSubject<IStore>;
   public readonly items: BehaviorSubject<Array<IItem>>;
-
-  public theme: BehaviorSubject<string>;
+  public appSettings: BehaviorSubject<IAppSettings>;
 
   constructor(private ixdb: IXDB) {
     this.stores = new BehaviorSubject<Array<IStore>>([]);
     this.currentStore = new BehaviorSubject<IStore>(null);
     this.items = new BehaviorSubject<Array<IItem>>([]);
-    this.applyInitialTheme();
+    this.getLocalSettings();
     this.initializeFirstTimeDatabase();
     this.currentStore.subscribe(this.subscribeCurrentStore);
-    this.theme.subscribe(this.themeSubscriber);
+    this.appSettings.subscribe(this.appSettingsSubscriber);
   }
 
 
@@ -57,10 +56,10 @@ export class DataFactory {
   }
 
   deleteBulkItems = async (items: Array<IItem>): Promise<void> => {
-   let indexes = items.map(i => i.id);
-   await this.ixdb.removeBulk(TABLE.ITEMS, indexes);
-   await this.getCurrentStoreItems();
-   return void(0);
+    let indexes = items.map(i => i.id);
+    await this.ixdb.removeBulk(TABLE.ITEMS, indexes);
+    await this.getCurrentStoreItems();
+    return void (0);
   }
 
   // ITEM - End
@@ -108,20 +107,24 @@ export class DataFactory {
   }
 
   changeTheme = (theme: string) => {
-    this.theme.next(theme);
+    let settings = this.appSettings.getValue();
+    settings.theme = theme;
+    this.setLocalSettings(settings);
   }
 
-  private themeSubscriber = (value: string) => {
-    window.document.body.setAttribute('theme', value);
-    localStorage.setItem('theme', value);
+  private getLocalSettings = (): IAppSettings => {
+    let settings = localStorage.getItem('appSettings');
+    if (settings === null) {
+      this.appSettings = new BehaviorSubject<IAppSettings>({ theme: 'md-blue', sortBy: ITEMSORT.NAME });
+      settings = JSON.stringify(this.appSettings.getValue());
+    }
+    return JSON.parse(settings) as IAppSettings;
   }
 
-  private applyInitialTheme = () => {
-    let localTheme = localStorage.getItem('theme');
-    if (localTheme === null) {
-      this.theme = new BehaviorSubject<string>('md-blue');
-    } else {
-      this.theme = new BehaviorSubject<string>(localTheme);
+  private setLocalSettings = (settings: IAppSettings) => {
+    if (settings !== null && settings !== undefined) {
+      localStorage.setItem('appSettings', JSON.stringify(settings));
+      this.appSettings.next(settings);
     }
   }
 
