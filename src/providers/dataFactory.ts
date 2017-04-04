@@ -16,7 +16,7 @@ export class DataFactory {
     this.stores = new BehaviorSubject<Array<IStore>>([]);
     this.currentStore = new BehaviorSubject<IStore>(null);
     this.items = new BehaviorSubject<Array<IItem>>([]);
-    this.appSettings = new BehaviorSubject<IAppSettings>({ theme: 'md-blue', sortBy: ITEMSORT.NAME });
+    this.appSettings = new BehaviorSubject<IAppSettings>({ theme: 'md-blue', sortBy: ITEMSORT.name });
     this.initializeAppSettings();
     this.initializeFirstTimeDatabase();
     this.currentStore.subscribe(this.subscribeCurrentStore);
@@ -32,6 +32,13 @@ export class DataFactory {
     let settings = this.appSettings.getValue();
     settings.theme = theme;
     this.changeSettings(settings);
+  }
+
+  public changeSort = (sort: ITEMSORT) => {
+    let settings = this.appSettings.getValue();
+    settings.sortBy = sort;
+    this.changeSettings(settings);
+    this.getCurrentStoreItems();
   }
 
   private initializeAppSettings = () => {
@@ -67,7 +74,11 @@ export class DataFactory {
   }
 
   public getCurrentStoreItems = async (): Promise<Array<IItem>> => {
-    let items = await this.ixdb.getBulk<IItem>(TABLE.ITEMS, 'storeId', this.currentStore.getValue().id);
+    let sort = this.appSettings.getValue().sortBy;
+    let items = (sort === ITEMSORT.new_first || sort === ITEMSORT.new_last) ? 
+     await this.ixdb.getBulk<IItem>(TABLE.ITEMS, 'storeId', this.currentStore.getValue().id) : 
+     await this.ixdb.getSortedBulk<IItem>(TABLE.ITEMS, 'storeId', this.currentStore.getValue().id, sort);
+     items = sort === ITEMSORT.new_first ? items.reverse() : items;
     this.items.next(items);
     return items;
   }

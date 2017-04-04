@@ -2,25 +2,31 @@
   <ion-list no-lines radio-group>
     <ion-item-group>
       <ion-item-divider color="light">Sort</ion-item-divider>
-      <ion-item>
+      <!--<ion-item>
         <ion-label>Newest Last</ion-label>
-        <ion-radio value="1"></ion-radio>
+        <ion-radio value="1" [checked]="(factory.appSettings | async).sortBy === 1"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Newest First</ion-label>
-        <ion-radio value="2"></ion-radio>
+        <ion-radio value="2" [checked]="(factory.appSettings | async).sortBy === 2"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Sort by Name</ion-label>
-        <ion-radio value="3"></ion-radio>
+        <ion-radio value="3" [checked]="(factory.appSettings | async).sortBy === 3"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Sort by Quantity</ion-label>
-        <ion-radio value="4"></ion-radio>
+        <ion-radio value="4" [checked]="(factory.appSettings | async).sortBy === 4"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Sort by Unit</ion-label>
-        <ion-radio value="5"></ion-radio>
+        <ion-radio value="5" [checked]="(factory.appSettings | async).sortBy === 5"></ion-radio>
+      </ion-item>-->
+      <ion-item *ngFor="let sortItem of sortQueries">
+        <ion-label>{{sortItem.label}}</ion-label>
+        <ion-radio [value]="sortItem.value" 
+                   [checked]="(factory.appSettings | async).sortBy === sortItem.value"
+                   (click)="changeSortQuery(sortItem)"></ion-radio>
       </ion-item>
     </ion-item-group>
     <ion-item-group>

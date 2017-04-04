@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import { TABLE } from '../common/tgCore';
+import { TABLE, ITEMSORT } from '../common/tgCore';
 
 export class IXDB {
   private __db: Dexie = null;
@@ -28,6 +28,22 @@ export class IXDB {
       .where(key)
       .equals(compareWith)
       .toArray();
+  }
+
+  getSortedBulk = async <T>(table: TABLE, key: string, compareWith: any, sort: ITEMSORT): Promise<Array<T>> => {
+    let items = await this.__db
+      .table<T>(this.table(table))
+      .where(key)
+      .equals(compareWith)
+      .toArray();
+    items = items.sort((left, right) => {
+      if (typeof left[ITEMSORT[sort]] === 'number') {
+        return left[ITEMSORT[sort]] - right[ITEMSORT[sort]];
+      } else if (typeof left[ITEMSORT[sort]] === 'string') {
+        return left[ITEMSORT[sort]].toString().toLowerCase().localeCompare(right[ITEMSORT[sort]].toString().toLowerCase());
+      }
+    });
+    return items;
   }
 
   addOne = async <T>(table: TABLE, object: T): Promise<number> => {

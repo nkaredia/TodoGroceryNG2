@@ -15,13 +15,13 @@ export declare interface IItem {
 }
 
 export enum UNIT {
-  pk = 0,
-  kg = 1,
+  doz = 0,
+  gal = 1,
   gm = 2,
-  lb = 3,
-  lt = 4,
-  gal = 5,
-  doz = 6
+  kg = 3,
+  lb = 4,
+  lt = 5,
+  pk = 6
 }
 
 export enum TABLE {
@@ -50,9 +50,9 @@ export interface IAppSettings {
 }
 
 export enum ITEMSORT {
-  NEWLAST = 1,
-  NEWFIRST = 2,
-  NAME = 3,
-  QUANTITY = 4,
-  UNIT = 5
+  new_last = 1,
+  new_first = 2,
+  name = 3,
+  quantity = 4,
+  unit = 5
 }
