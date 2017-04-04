@@ -16,16 +16,49 @@ export class DataFactory {
     this.stores = new BehaviorSubject<Array<IStore>>([]);
     this.currentStore = new BehaviorSubject<IStore>(null);
     this.items = new BehaviorSubject<Array<IItem>>([]);
-    this.getLocalSettings();
+    this.appSettings = new BehaviorSubject<IAppSettings>({ theme: 'md-blue', sortBy: ITEMSORT.NAME });
+    this.initializeAppSettings();
     this.initializeFirstTimeDatabase();
     this.currentStore.subscribe(this.subscribeCurrentStore);
     this.appSettings.subscribe(this.appSettingsSubscriber);
   }
 
+  /**
+   * 
+   * App Settings
+   */
+
+  public changeTheme = (theme: string) => {
+    let settings = this.appSettings.getValue();
+    settings.theme = theme;
+    this.changeSettings(settings);
+  }
+
+  private initializeAppSettings = () => {
+    let settings = localStorage.getItem('appSettings');
+    if (settings !== null && settings !== undefined) {
+      this.appSettings.next(JSON.parse(settings));
+    } else {
+      this.changeSettings(this.appSettings.getValue());
+    }
+  }
+
+  private changeSettings = (settings: IAppSettings) => {
+    this.setLocalSettings(settings);
+    this.appSettings.next(settings);
+  }
+
+  private setLocalSettings = (settings: IAppSettings) => {
+    localStorage.setItem('appSettings', JSON.stringify(settings));
+  }
+
+  private appSettingsSubscriber = (settings: IAppSettings) => {
+    window.document.body.setAttribute('theme', settings.theme);
+  }
 
   // ITEM - Start
 
-  addNewItem = async (item: IItem): Promise<number> => {
+  public addNewItem = async (item: IItem): Promise<number> => {
     let index = await this.ixdb.addOne<IItem>(TABLE.ITEMS, item);
     if (index > 0) {
       this.getCurrentStoreItems();
@@ -33,13 +66,13 @@ export class DataFactory {
     return index;
   }
 
-  getCurrentStoreItems = async (): Promise<Array<IItem>> => {
+  public getCurrentStoreItems = async (): Promise<Array<IItem>> => {
     let items = await this.ixdb.getBulk<IItem>(TABLE.ITEMS, 'storeId', this.currentStore.getValue().id);
     this.items.next(items);
     return items;
   }
 
-  updateItem = async (item: IItem): Promise<number> => {
+  public updateItem = async (item: IItem): Promise<number> => {
     let index = await this.ixdb.addOrReplaceOne<IItem>(TABLE.ITEMS, item);
     if (index > 0) {
       this.getCurrentStoreItems();
@@ -47,7 +80,7 @@ export class DataFactory {
     return index;
   }
 
-  deleteItem = async (item: IItem): Promise<number> => {
+  public deleteItem = async (item: IItem): Promise<number> => {
     let index = await this.ixdb.removeOne<IItem>(TABLE.ITEMS, item.id);
     if (index > 0) {
       this.getCurrentStoreItems();
@@ -55,7 +88,7 @@ export class DataFactory {
     return index;
   }
 
-  deleteBulkItems = async (items: Array<IItem>): Promise<void> => {
+  public deleteBulkItems = async (items: Array<IItem>): Promise<void> => {
     let indexes = items.map(i => i.id);
     await this.ixdb.removeBulk(TABLE.ITEMS, indexes);
     await this.getCurrentStoreItems();
@@ -66,21 +99,21 @@ export class DataFactory {
 
   // STORE - Start
 
-  subscribeCurrentStore = (currentStore: IStore) => {
+  public subscribeCurrentStore = (currentStore: IStore) => {
     if (currentStore !== null) {
       this.getCurrentStoreItems();
     }
   }
 
-  getStoreByName = (name: string): IStore => {
+  public getStoreByName = (name: string): IStore => {
     return this.stores.getValue().find(i => i.name.toLocaleLowerCase() === name.toLocaleLowerCase());
   }
 
-  changeCurrentStore = (store: IStore) => {
+  public changeCurrentStore = (store: IStore) => {
     this.setStoreInLocal(store);
   }
 
-  updateStore = async (store: IStore): Promise<number> => {
+  public updateStore = async (store: IStore): Promise<number> => {
     if (await this.ixdb.getOnce(TABLE.STORES, 'name', store.name)) {
       throw new Error('Store already exists');
     }
@@ -93,7 +126,7 @@ export class DataFactory {
     return index;
   }
 
-  addNewStore = async (store: IStore): Promise<number> => {
+  public addNewStore = async (store: IStore): Promise<number> => {
     if (await this.ixdb.getOnce(TABLE.STORES, 'name', store.name)) {
       throw new Error('Store already exists');
     }
@@ -104,28 +137,6 @@ export class DataFactory {
     await this.getAllStores();
     this.setStoreInLocal(this.stores.getValue()[index - 1]);
     return index;
-  }
-
-  changeTheme = (theme: string) => {
-    let settings = this.appSettings.getValue();
-    settings.theme = theme;
-    this.setLocalSettings(settings);
-  }
-
-  private getLocalSettings = (): IAppSettings => {
-    let settings = localStorage.getItem('appSettings');
-    if (settings === null) {
-      this.appSettings = new BehaviorSubject<IAppSettings>({ theme: 'md-blue', sortBy: ITEMSORT.NAME });
-      settings = JSON.stringify(this.appSettings.getValue());
-    }
-    return JSON.parse(settings) as IAppSettings;
-  }
-
-  private setLocalSettings = (settings: IAppSettings) => {
-    if (settings !== null && settings !== undefined) {
-      localStorage.setItem('appSettings', JSON.stringify(settings));
-      this.appSettings.next(settings);
-    }
   }
 
   private getStoreFromLocal = (): IStore => {

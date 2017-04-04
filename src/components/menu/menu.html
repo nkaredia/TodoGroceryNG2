@@ -15,7 +15,7 @@
   </ion-list>
 </ion-content>
 <ion-footer add-new-store>
-  <button ion-button icon-left [color]="factory.theme | async" full (click)="addOrUpdateStore('Add')">
+  <button ion-button icon-left [color]="(factory.appSettings | async).theme" full (click)="addOrUpdateStore('Add')">
     <ion-icon name="add"></ion-icon>
       Add new Store
   </button>

@@ -34,6 +34,9 @@ export class List {
     this.toggleAllItems = false;
     this.allItemsSelected = false;
     this.registerSubscribers();
+    this.factory.appSettings.subscribe(v => {
+      console.log('from list', v);
+    })
   }
 
   registerSubscribers = () => {
