@@ -50,7 +50,9 @@ export interface IAppSettings {
 }
 
 export enum ITEMSORT {
-  NAME = 1,
-  QUANTITY = 2,
-  UNIT = 3
+  NEWLAST = 1,
+  NEWFIRST = 2,
+  NAME = 3,
+  QUANTITY = 4,
+  UNIT = 5
 }
