@@ -150,6 +150,15 @@ export class DataFactory {
     return index;
   }
 
+  public deleteStore = async (store: IStore) => {
+    await this.ixdb.removeOne<IStore>(TABLE.STORES, store.id)
+    await this.getAllStores();
+    await this.ixdb.removeByKey(TABLE.ITEMS, 'storeId', store.id);
+    if (this.currentStore.getValue().id === store.id) {
+      this.changeCurrentStore(this.stores.getValue()[0]);
+    }
+  }
+
   private getStoreFromLocal = (): IStore => {
     return JSON.parse(localStorage.getItem('currentStore'));
   }

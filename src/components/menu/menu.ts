@@ -43,6 +43,10 @@ export class Menu {
     });
   }
 
+  deleteStore = async (store: IStore) => {
+    await this.factory.deleteStore(store);
+  }
+
   generateAlertOptions = (type: string, store: IStore): AlertOptions => {
     let t = type.toLowerCase();
     return {
@@ -100,6 +104,7 @@ export class Menu {
           role: 'destructive',
           icon: 'trash',
           handler: () => {
+            this.deleteStore(store);
           }
         }, {
           text: 'Update',
@@ -115,7 +120,7 @@ export class Menu {
           }
         }
       ]
-    }
+    } as ActionSheetOptions;
   }
 
   private generateToastOptions(message: string, type: number): ToastOptions {
@@ -125,6 +130,6 @@ export class Menu {
       position: 'top',
       cssClass: type === 1 ? 'toast-success' : 'toast-error',
       showCloseButton: true
-    }
+    };
   }
 }

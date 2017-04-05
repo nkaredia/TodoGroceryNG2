@@ -72,6 +72,14 @@ export class IXDB {
       .bulkDelete(index);
   }
 
+  removeByKey = async <T>(table: TABLE, key: string, value: any): Promise<number> => {
+    return await this.__db
+      .table(this.table(table))
+      .where(key)
+      .equals(value)
+      .delete();
+  }
+
   private createTables = () => {
     if (this.__db !== null) {
       this.__db.version(1).stores({
