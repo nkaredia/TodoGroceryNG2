@@ -35,7 +35,12 @@ export class Menu {
 
   addOrUpdateStore = (type: string, store?: IStore) => {
     let prompt = this.alertCtrl.create(this.generateAlertOptions(type, store));
-    prompt.present();
+    prompt.present().then(v => {
+      let alertInput = document.getElementById('addItemAlert');
+      if (alertInput) {
+        alertInput.setAttribute('maxlength', '20');
+      }
+    });
   }
 
   generateAlertOptions = (type: string, store: IStore): AlertOptions => {
@@ -43,7 +48,7 @@ export class Menu {
     return {
       title: t.toUpperCase(),
       message: t === 'add' ? 'Add a new Store' : 'Update ' + store.name,
-      inputs: [{ name: 'store', placeholder: 'Store Name', value: t === 'update' ? store.name : '' }],
+      inputs: [{ name: 'store', placeholder: 'Store Name', value: t === 'update' ? store.name : '', id: 'addItemAlert' }],
       buttons: [
         { text: 'Cancel', handler: data => { } },
         { text: t.capitalize(), handler: data => { this.handleAddOrUpdateStore(data.store, t, store && store.id ? store.id : null); } }
