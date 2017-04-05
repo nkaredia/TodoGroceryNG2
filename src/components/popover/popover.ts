@@ -3,6 +3,7 @@ import { DataFactory } from '../../providers/dataFactory';
 import {
   ViewController
 } from 'ionic-angular';
+import { AboutPage } from '../../pages/about/about';
 
 @Component({
   selector: 'tg-popover',
@@ -12,6 +13,11 @@ export class Popover {
 
   constructor(private viewCtrl: ViewController,
     private factory: DataFactory) {
+  }
+
+  gotoAbout = () => {
+    this.viewCtrl.getNav().push(AboutPage, {theme: this.factory.appSettings.getValue().theme});
+    this.viewCtrl.dismiss();
   }
 
   changeTheme = (theme: string) => {

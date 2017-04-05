@@ -116,7 +116,7 @@ export class List {
 
   selectItem = (e: Event, item: IItem) => {
     let __item = this.selectedItemsToRemove.find(i => i.id === item.id);
-    let isChecked = document.querySelector('#checkbox'+item.id).children[1].attributes.getNamedItem('aria-checked').value === "true"
+    let isChecked = document.querySelector('#checkbox' + item.id).children[1].attributes.getNamedItem('aria-checked').value === "true"
     if (!__item && isChecked) {
       this.selectedItemsToRemove.push(item);
       this.toggleAllItems = this.factory.items.getValue().length === this.selectedItemsToRemove.length ? true : false;
