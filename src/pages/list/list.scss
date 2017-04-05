@@ -75,6 +75,10 @@
     .item:last-child {
       border: 0px;
     }
+    .item-checkbox-checked {
+      background-color: color($colors, light);
+      transition: background-color 500ms linear;
+    }
     [item-name-block] {
       @include grid();
       ion-checkbox {
