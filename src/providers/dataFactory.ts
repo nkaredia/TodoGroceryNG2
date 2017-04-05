@@ -75,10 +75,10 @@ export class DataFactory {
 
   public getCurrentStoreItems = async (): Promise<Array<IItem>> => {
     let sort = this.appSettings.getValue().sortBy;
-    let items = (sort === ITEMSORT.new_first || sort === ITEMSORT.new_last) ? 
-     await this.ixdb.getBulk<IItem>(TABLE.ITEMS, 'storeId', this.currentStore.getValue().id) : 
-     await this.ixdb.getSortedBulk<IItem>(TABLE.ITEMS, 'storeId', this.currentStore.getValue().id, sort);
-     items = sort === ITEMSORT.new_first ? items.reverse() : items;
+    let items = (sort === ITEMSORT.new_first || sort === ITEMSORT.new_last) ?
+      await this.ixdb.getBulk<IItem>(TABLE.ITEMS, 'storeId', this.currentStore.getValue().id) :
+      await this.ixdb.getSortedBulk<IItem>(TABLE.ITEMS, 'storeId', this.currentStore.getValue().id, sort);
+    items = sort === ITEMSORT.new_first ? items.reverse() : items;
     this.items.next(items);
     return items;
   }

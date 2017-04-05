@@ -51,7 +51,7 @@
       <button ion-item detail-none class="item-button" (click)="checkItem(item)" (press)="enableSelectItems($event, item)">
           <div item-left item-name-block>
             <div>
-              <ion-checkbox [color]="(factory.appSettings | async).theme" (click)="selectItem($event, item)" [checked]="allItemsSelected" *ngIf="selectItemInProgress"></ion-checkbox>
+              <ion-checkbox id="{{'checkbox' + item.id}}" [color]="(factory.appSettings | async).theme" (click)="selectItem($event, item)" [checked]="allItemsSelected" *ngIf="selectItemInProgress"></ion-checkbox>
             </div>
             <div>{{item.name}}</div>
           </div>

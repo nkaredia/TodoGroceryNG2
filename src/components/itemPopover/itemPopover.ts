@@ -22,6 +22,9 @@ export class ItemPopover {
     ]
   }
 
+  deleteAllItems = (e: Event) => {
+    this.factory.deleteBulkItems(this.factory.items.getValue());
+  }
 
   changeSortQuery = (sort: ISortPopoverObject) => {
     this.factory.changeSort(sort.value);
