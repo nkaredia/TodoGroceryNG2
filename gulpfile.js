@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const fs = require('fs-extra');
 const rmrf = require('rimraf');
 const spawn = require('child_process').spawn;
+const yargs = require('yargs');
 
 
 const www = './www/';
@@ -41,6 +42,10 @@ consoleStdOut = (data) => {
   process.stdout.write(`${data}`);
 }
 
+getBuildType = () => {
+  return yargs.argv.deploy ? 'run ' : 'build ';
+}
+
 gulp.task('clean', function () {
   rmrf.sync(www);
   console.log('cleaning www');
@@ -63,11 +68,12 @@ gulp.task('restore', function () {
 
 gulp.task('build', function () {
   let command = process.platform === 'win32' ?
-    spawn('cmd.exe', ['/C', ['ionic build ' + PLATFORM[currentPlatform]]]) :
-    spawn('ionic', ['build', PLATFORM[currentPlatform]]);
+    spawn('cmd.exe', ['/C', ['ionic ' + getBuildType() + PLATFORM[currentPlatform]]]) :
+    spawn('ionic', [getBuildType(), PLATFORM[currentPlatform]]);
   command.stdout.on('data', consoleStdOut);
   command.stderr.on('data', consoleStdOut);
   command.on('close', consoleStdOut);
+  console.log('nk--args' + yargs.argv.deploy);
 });
 
 gulp.task('android', ['clean'], function () {
