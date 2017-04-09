@@ -34,3 +34,6 @@ www/service-worker.js
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+
+
+!src/platforms

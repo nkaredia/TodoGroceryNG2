@@ -35,7 +35,11 @@
   "devDependencies": {
     "@ionic/app-scripts": "1.1.4",
     "typescript": "2.0.9",
-    "@types/lodash": "ts2.0"
+    "@types/lodash": "ts2.0",
+    "@types/fs-extra": "^2.0.0",
+    "@types/gulp": "^4.0.2",
+    "gulp": "^3.9.1",
+    "rimraf": "^2.6.1"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
