@@ -20,13 +20,15 @@
     "@angular/platform-browser": "2.4.8",
     "@angular/platform-browser-dynamic": "2.4.8",
     "@angular/platform-server": "2.4.8",
+    "@ionic-native/core": "3.4.4",
+    "@ionic-native/device": "^3.4.4",
+    "@ionic-native/in-app-browser": "3.4.4",
+    "@ionic-native/keyboard": "^3.4.4",
+    "@ionic-native/splash-screen": "^3.1.1",
+    "@ionic-native/status-bar": "^3.4.4",
     "@ionic/storage": "2.0.0",
     "dexie": "^1.5.1",
     "ionic-angular": "2.3.0",
-    "ionic-native": "2.4.1",
-    "@ionic-native/core": "3.1.1",
-    "@ionic-native/in-app-browser": "3.1.1",
-    "@ionic-native/splash-screen": "3.1.1",
     "ionicons": "3.0.0",
     "rxjs": "5.0.1",
     "sw-toolbox": "3.4.0",
@@ -34,20 +36,17 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.1.4",
-    "typescript": "2.0.9",
-    "@types/lodash": "ts2.0",
     "@types/fs-extra": "^2.0.0",
     "@types/gulp": "^4.0.2",
+    "@types/lodash": "ts2.0",
     "gulp": "^3.9.1",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "typescript": "2.0.9",
+    "uglify-js": "github:mishoo/UglifyJS2#harmony"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
-    "cordova-plugin-console",
-    "cordova-plugin-statusbar",
-    "cordova-plugin-device",
-    "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard"
+    "cordova-plugin-console"
   ],
   "cordovaPlatforms": [],
   "description": "TodoGrocery: An Ionic project"

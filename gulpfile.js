@@ -9,6 +9,9 @@ const www = './www/';
 const androidLocalToBuild = [{
   fileFrom: './src/platforms/android/AndroidManifest.xml',
   fileTo: './platforms/android/'
+}, {
+  fileFrom: './src/platforms/android/MainActivity.java',
+  fileTo: './platforms/android/src/com/karedianoorsil/todogrocery/'
 }];
 
 let PLATFORM = {
@@ -77,8 +80,8 @@ gulp.task('build', function () {
 });
 
 gulp.task('android', ['clean'], function () {
-  return androidLocalToBuild.forEach(function (v, i) {
-    try {
+  try {
+    androidLocalToBuild.forEach(function (v, i) {
       let files = fs.readdirSync(v.fileTo)
       if (files.length > 0) {
         files.forEach(function (val, ind) {
@@ -89,18 +92,18 @@ gulp.task('android', ['clean'], function () {
               console.log('Copying file from ' + v.fileFrom + ' to ' + v.fileTo + val);
               fs.copySync(v.fileFrom, v.fileTo + val);
               console.log('Success...');
-              currentPlatform = PLATFORM.android;
-              gulp.start('build', function (err) {
-                console.log(err);
-              });
             }
           }
         });
       }
-    } catch (error) {
-      console.log(error);
-    }
-  });
+    });
+    currentPlatform = PLATFORM.android;
+    gulp.start('build', function (err) {
+      console.log(err);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 gulp.task('ios', ['clean'], function () {
