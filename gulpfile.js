@@ -52,8 +52,10 @@ getBuildType = () => {
 gulp.task('clean', function () {
   rmrf.sync(www);
   console.log('cleaning www');
+  let oldMask = process.umask(0);
   if (!fs.existsSync(www)) {
-    fs.mkdirSync(www, 755);
+    fs.mkdirSync(www, 0777);
+    process.umask(oldMask);
     fs.closeSync(fs.openSync(www + '.placeholder', 'w'));
     console.log('preserving placeholder...');
   }
