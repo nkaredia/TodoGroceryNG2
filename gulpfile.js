@@ -61,8 +61,8 @@ gulp.task('clean', function () {
 
 gulp.task('restore', function () {
   let command = process.platform === 'win32' ?
-    spawn('cmd.exe', ['/C', 'ionic platform add android && ionic state restore --plugins']) :
-    spawn('ionic', ['build', 'ionic', 'platform', 'add', 'android', '&&', 'ionic', 'state', 'restore', '--plugins']);
+    spawn('cmd.exe', ['/C', 'ionic platform add android && ionic state restore --plugins']):
+    spawn('/bin/sh', ['-c', 'ionic platform add android && ionic state restore --plugins']);
 
   command.stdout.on('data', consoleStdOut);
   command.stderr.on('data', consoleStdOut);
@@ -72,7 +72,7 @@ gulp.task('restore', function () {
 gulp.task('build', function () {
   let command = process.platform === 'win32' ?
     spawn('cmd.exe', ['/C', ['ionic ' + getBuildType() + PLATFORM[currentPlatform]]]) :
-    spawn('ionic', [getBuildType(), PLATFORM[currentPlatform]]);
+    spawn('/bin/sh', ['-c', ['ionic ' + getBuildType() + PLATFORM[currentPlatform]]])
   command.stdout.on('data', consoleStdOut);
   command.stderr.on('data', consoleStdOut);
   command.on('close', consoleStdOut);
