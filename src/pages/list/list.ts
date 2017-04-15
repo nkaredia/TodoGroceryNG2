@@ -59,9 +59,10 @@ export class List {
   };
 
   subscribeAddItem = async (item: IItem) => {
-    item.checked = false;
-    item.storeId = this.factory.currentStore.getValue().id;
-    this.factory.addNewItem(item);
+    // item.checked = false;
+    // item.storeId = this.factory.currentStore.getValue().id;
+    // this.factory.addNewItem(item);
+    console.log(item);
   };
 
   checkItem = (item: IItem) => {
@@ -81,7 +82,8 @@ export class List {
   addNewItem = (e: Event) => {
     let modal = this.modalCtrl.create(AddItem);
     modal.present();
-    modal.subscribe(this.subscribeAddItem);
+    
+    modal.onDidDismiss(this.subscribeAddItem);
   }
 
   getUnitByIndex = (unit: UNIT) => {

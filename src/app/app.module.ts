@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
+
 import { List } from '../pages/list/list';
 import { Menu } from '../components/menu/menu';
 import { DataFactory } from '../providers/dataFactory';
@@ -10,6 +12,9 @@ import { Popover } from '../components/popover/popover';
 import { SearchForPipe } from '../common/tgCore';
 import { ItemPopover } from '../components/itemPopover/itemPopover';
 import { AboutPage } from '../pages/about/about';
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 @NgModule({
   declarations: [
@@ -23,6 +28,7 @@ import { AboutPage } from '../pages/about/about';
     AboutPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -35,6 +41,11 @@ import { AboutPage } from '../pages/about/about';
     ItemPopover,
     AboutPage
   ],
-  providers: [IXDB, DataFactory]
+  providers: [
+    StatusBar,
+    SplashScreen,
+    IXDB,
+    DataFactory
+  ]
 })
 export class AppModule { }
