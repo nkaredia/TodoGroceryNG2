@@ -34,9 +34,6 @@ export class List {
     this.toggleAllItems = false;
     this.allItemsSelected = false;
     this.registerSubscribers();
-    this.factory.appSettings.subscribe(v => {
-      console.log('from list', v);
-    })
   }
 
   registerSubscribers = () => {
@@ -59,10 +56,9 @@ export class List {
   };
 
   subscribeAddItem = async (item: IItem) => {
-    // item.checked = false;
-    // item.storeId = this.factory.currentStore.getValue().id;
-    // this.factory.addNewItem(item);
-    console.log(item);
+    item.checked = false;
+    item.storeId = this.factory.currentStore.getValue().id;
+    this.factory.addNewItem(item);
   };
 
   checkItem = (item: IItem) => {
@@ -80,10 +76,8 @@ export class List {
   };
 
   addNewItem = (e: Event) => {
-    let modal = this.modalCtrl.create(AddItem);
+    let modal = this.modalCtrl.create(AddItem, {dismissCallback: this.subscribeAddItem});
     modal.present();
-    
-    modal.onDidDismiss(this.subscribeAddItem);
   }
 
   getUnitByIndex = (unit: UNIT) => {
@@ -106,7 +100,6 @@ export class List {
 
   enableSelectItems = (e: Event, item: IItem) => {
     e.preventDefault();
-    console.log('item long press', e);
     this.selectItemInProgress = true;
 
   }

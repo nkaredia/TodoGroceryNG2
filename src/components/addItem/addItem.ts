@@ -47,7 +47,7 @@ export class AddItem implements OnInit {
     }
     let item: IItem = form.value;
     item.quantity = +item.quantity;
-    this.viewCtrl.emit(item);
+    this.viewCtrl.data.dismissCallback(item);
     this.viewCtrl.dismiss();
   }
  

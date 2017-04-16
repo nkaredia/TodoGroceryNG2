@@ -11,7 +11,7 @@
         <ion-icon name="ios-arrow-down"></ion-icon>
       </button>
       <button ion-button icon-only (click)="toggleSearch($event)">
-        <ion-icon name="search"></ion-icon>
+        <ion-icon name="md-search"></ion-icon>
       </button>
       <button ion-button icon-only (click)="openPopover($event)">
         <ion-icon name="md-more"></ion-icon>
@@ -67,9 +67,15 @@
             Delete
           </button>
       </ion-item-options>
+      <ion-item-options side="left">
+        <button ion-button color="danger" (click)="deleteItem(item)">
+          <ion-icon name="trash"></ion-icon>
+            Delete
+          </button>
+      </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-  <ion-fab right bottom>
+  <ion-fab right bottom *ngIf="!selectItemInProgress">
     <button (click)="addNewItem($event)" ion-fab [color]="(factory.appSettings | async).theme"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>
