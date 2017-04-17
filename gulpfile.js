@@ -67,9 +67,14 @@ gulp.task('clean', function () {
 });
 
 gulp.task('restore', function () {
+  console.log("Installing Platforms and Plugins, Please wait...");
   if (process.platform === 'win32') {
-    console.log("Installing Platforms and Plugins, Please wait...");
     winPlatforms.forEach(function (v) {
+      console.log(`${exec(v)}`);
+      console.log(v + " Completed...");
+    });
+  } else if (process.platform === 'darwin') {
+    macPlatforms.forEach(function(v){
       console.log(`${exec(v)}`);
       console.log(v + " Completed...");
     });
