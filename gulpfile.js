@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 const rmrf = require('rimraf');
 const spawn = require('child_process').spawn;
 const yargs = require('yargs');
+const exec = require('child_process').execSync;
 
 
 const www = './www/';
@@ -22,6 +23,10 @@ let PLATFORM = {
   "ios": "2",
   "windows": "3"
 };
+
+let winPlatforms = ['ionic platform add android', 'ionic platform add "windows@https://aka.ms/cordova-win10"', ' ionic state restore --plugins'];
+let macPlatforms = ['ionic platform add android', 'ionic platform add ios', 'ionic state restore --plugins'];
+let linuxPlatforms = ['ionic platform add android', 'ionic state restore --plugins'];
 
 let currentPlatform = PLATFORM.android;
 
@@ -62,13 +67,13 @@ gulp.task('clean', function () {
 });
 
 gulp.task('restore', function () {
-  let command = process.platform === 'win32' ?
-    spawn('cmd.exe', ['/C', 'ionic platform add android && ionic platform add “windows@https://aka.ms/cordova-win10” && ionic state restore --plugins']):
-    spawn('/bin/sh', ['-c', 'ionic platform add android && ionic state restore --plugins']);
-
-  command.stdout.on('data', consoleStdOut);
-  command.stderr.on('data', consoleStdOut);
-  command.on('close', consoleStdOut);
+  if (process.platform === 'win32') {
+    console.log("Installing Platforms and Plugins, Please wait...");
+    winPlatforms.forEach(function (v) {
+      console.log(`${exec(v)}`);
+      console.log(v + " Completed...");
+    });
+  }
 });
 
 gulp.task('build', function () {
@@ -78,7 +83,6 @@ gulp.task('build', function () {
   command.stdout.on('data', consoleStdOut);
   command.stderr.on('data', consoleStdOut);
   command.on('close', consoleStdOut);
-  console.log('nk--args' + yargs.argv.deploy);
 });
 
 gulp.task('android', ['clean'], function () {
