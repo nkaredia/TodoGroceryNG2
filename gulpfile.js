@@ -63,7 +63,7 @@ gulp.task('clean', function () {
 
 gulp.task('restore', function () {
   let command = process.platform === 'win32' ?
-    spawn('cmd.exe', ['/C', 'ionic platform add android && ionic state restore --plugins']):
+    spawn('cmd.exe', ['/C', 'ionic platform add android && ionic platform add “windows@https://aka.ms/cordova-win10” && ionic state restore --plugins']):
     spawn('/bin/sh', ['-c', 'ionic platform add android && ionic state restore --plugins']);
 
   command.stdout.on('data', consoleStdOut);
