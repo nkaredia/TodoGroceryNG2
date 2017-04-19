@@ -15,6 +15,9 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 @mixin androidTheme($theme) {
+  .toolbar-md {
+    border-top-color: $theme;
+  }
   ion-alert {
     .alert-input:focus {
       border-bottom: 2px solid $theme;
@@ -166,6 +169,11 @@ body[theme="md-grey"] {
   align-items: $vertical;
   justify-content: $horizontal;
   flex-wrap: $wrap;
+}
+
+.toolbar-md {
+  min-height: 84px;
+  border-top: 24px solid;
 }
 
 .toast-success .toast-message {

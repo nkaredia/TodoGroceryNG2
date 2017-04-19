@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Device } from '@ionic-native/device';
 import { List } from '../pages/list/list';
 import { DataFactory } from '../providers/dataFactory';
 
@@ -16,14 +17,17 @@ export class MyApp {
   constructor(private platform: Platform,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
-    private factory: DataFactory) {
+    private factory: DataFactory,
+    private device: Device) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.show();
       splashScreen.hide();
       platform.resume.subscribe((res) => {
-        this.changeTheme(this.factory.appSettings.getValue().theme);
+        if (device.platform.toLowerCase() !== 'android'){
+          this.changeTheme(this.factory.appSettings.getValue().theme);
+        }
       });
       this.factory.appSettings.subscribe(this.changeTheme);
     });
@@ -33,7 +37,7 @@ export class MyApp {
   }
 
   private changeTheme = (v) => {
-    if (v.theme !== this.currentTheme) {
+    if (v.theme !== this.currentTheme && this.device.platform.toLowerCase() !== 'android') {
       switch (v.theme) {
         case 'md-grey':
           this.statusBar.backgroundColorByHexString('#263238');
