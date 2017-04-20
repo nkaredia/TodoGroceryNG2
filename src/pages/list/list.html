@@ -7,10 +7,10 @@
     </ion-buttons>
     <ion-title>Todo Grocery</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="openItemPopover($event)">
+      <button ion-button icon-only (click)="openItemPopover($event)" *ngIf="(factory.items | async).length > 0">
         <ion-icon name="ios-arrow-down"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="toggleSearch($event)">
+      <button ion-button icon-only (click)="toggleSearch($event)" *ngIf="(factory.items | async).length > 0">
         <ion-icon name="md-search"></ion-icon>
       </button>
       <button ion-button icon-only (click)="openPopover($event)">
@@ -47,6 +47,9 @@
 </ion-menu>
 <ion-content #popoverContent #content padding list-page>
   <ion-list no-lines class="store-item-list">
+    <ion-item class="item-no-data" *ngIf="(factory.items | async).length === 0">
+      Touch <span class="item-no-data-plus">'+'</span> to add an Item
+    </ion-item>
     <ion-item-sliding *ngFor="let item of (factory.items | async) | searchFor:searchQuery">
       <button ion-item detail-none class="item-button" (click)="checkItem(item)" (press)="enableSelectItems($event, item)">
           <div item-left item-name-block>

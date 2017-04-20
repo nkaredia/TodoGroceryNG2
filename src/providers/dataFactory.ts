@@ -147,7 +147,7 @@ export class DataFactory {
       throw new Error('Unable to create store');
     }
     await this.getAllStores();
-    this.setStoreInLocal(this.stores.getValue()[index - 1]);
+    this.setStoreInLocal(this.stores.getValue().find(i => i.id === index));
     return index;
   }
 

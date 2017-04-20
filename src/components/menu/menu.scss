@@ -1,4 +1,10 @@
 tg-menu {
+  .list-md {
+    margin-top: 24px;
+    .list-header-md {
+      min-height: 59px;
+    }
+  }
   ion-list-header {
     margin-bottom: 0px !important;
     margin-top: 13px;
