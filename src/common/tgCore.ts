@@ -47,6 +47,7 @@ export class SearchForPipe implements PipeTransform {
 export interface IAppSettings {
   theme: string;
   sortBy: ITEMSORT;
+  themeColor: string;
 }
 
 export enum ITEMSORT {

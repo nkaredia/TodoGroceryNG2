@@ -24,20 +24,33 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.show();
       splashScreen.hide();
+      if (window && window['plugins'] && window['plugins']['headerColor'] && window['plugins']['headerColor']['tint']) {
+        window['plugins']['headerColor']['tint'](this.factory.appSettings.getValue().themeColor);
+      }
       platform.resume.subscribe((res) => {
-        if (device.platform.toLowerCase() !== 'android'){
+        if (device.platform.toLowerCase() !== 'android') {
           this.changeTheme(this.factory.appSettings.getValue().theme);
         }
+        if (window && window['plugins'] && window['plugins']['headerColor'] && window['plugins']['headerColor']['tint']) {
+          window['plugins']['headerColor']['tint'](this.factory.appSettings.getValue().themeColor);
+        }
       });
-      this.factory.appSettings.subscribe(this.changeTheme);
+      this.factory.appSettings.subscribe(this.applyTheme);
     });
     String.prototype.capitalize = function () {
       return this.charAt(0).toUpperCase() + this.slice(1);
     }
   }
 
+  private applyTheme = (v) => {
+    if (window && window['plugins'] && window['plugins']['headerColor'] && window['plugins']['headerColor']['tint']) {
+      window['plugins']['headerColor']['tint'](this.factory.appSettings.getValue().themeColor);
+    }
+    this.changeTheme(v);
+  }
+
   private changeTheme = (v) => {
-    if (v.theme !== this.currentTheme && this.device.platform.toLowerCase() !== 'android') {
+    if (v.theme !== this.currentTheme && this.device.platform && this.device.platform.toLowerCase() !== 'android') {
       switch (v.theme) {
         case 'md-grey':
           this.statusBar.backgroundColorByHexString('#263238');

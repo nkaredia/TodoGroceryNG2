@@ -20,7 +20,7 @@ export class Popover {
     this.viewCtrl.dismiss();
   }
 
-  changeTheme = (theme: string) => {
-    this.factory.changeTheme(theme);
+  changeTheme = (theme: string, themeColor: string) => {
+    this.factory.changeTheme(theme, themeColor);
   }
 }

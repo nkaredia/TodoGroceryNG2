@@ -16,7 +16,7 @@ export class DataFactory {
     this.stores = new BehaviorSubject<Array<IStore>>([]);
     this.currentStore = new BehaviorSubject<IStore>(null);
     this.items = new BehaviorSubject<Array<IItem>>([]);
-    this.appSettings = new BehaviorSubject<IAppSettings>({ theme: 'md-blue', sortBy: ITEMSORT.name });
+    this.appSettings = new BehaviorSubject<IAppSettings>({ theme: 'md-blue', sortBy: ITEMSORT.name, themeColor: '#283593' });
     this.initializeAppSettings();
     this.initializeFirstTimeDatabase();
     this.currentStore.subscribe(this.subscribeCurrentStore);
@@ -28,9 +28,10 @@ export class DataFactory {
    * App Settings
    */
 
-  public changeTheme = (theme: string) => {
+  public changeTheme = (theme: string, themeColor: string) => {
     let settings = this.appSettings.getValue();
     settings.theme = theme;
+    settings.themeColor = themeColor;
     this.changeSettings(settings);
   }
 

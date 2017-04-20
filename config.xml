@@ -69,4 +69,5 @@
     <engine name="android" spec="~6.1.2" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <engine name="windows" spec="https://aka.ms/cordova-win10" />
+    <plugin name="cordova-plugin-headercolor" spec="~1.0" />
 </widget>

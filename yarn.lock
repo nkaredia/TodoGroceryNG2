@@ -48,6 +48,10 @@
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/@ionic-native/core/-/core-3.4.2.tgz#6fa8956ff7d96f06cdd58fe523b316b9a7a2121b"
 
+"@ionic-native/device@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/device/-/device-3.5.0.tgz#d24b86b15592d7ec3e55525962cf17a928818ebc"
+
 "@ionic-native/splash-screen@3.4.2":
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-3.4.2.tgz#3ce378a3413bab8a0cd4cfd5029c3fadd9a6774c"

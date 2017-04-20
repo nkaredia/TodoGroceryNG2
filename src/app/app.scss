@@ -18,6 +18,10 @@
   .toolbar-md {
     border-top-color: $theme;
   }
+  .popover-content {
+    left: initial !important;
+    right: 16px !important;
+  }
   ion-alert {
     .alert-input:focus {
       border-bottom: 2px solid $theme;
