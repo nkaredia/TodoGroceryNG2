@@ -13,7 +13,7 @@
       <button ion-button icon-only (click)="toggleSearch($event)" *ngIf="(factory.items | async).length > 0">
         <ion-icon name="md-search"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="openPopover($event)">
+      <button ion-button more-button icon-only (click)="openPopover($event)">
         <ion-icon name="md-more"></ion-icon>
       </button>
     </ion-buttons>

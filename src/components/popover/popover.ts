@@ -16,8 +16,10 @@ export class Popover {
   }
 
   gotoAbout = () => {
-    this.viewCtrl.getNav().push(AboutPage, {theme: this.factory.appSettings.getValue().theme});
-    this.viewCtrl.dismiss();
+    this.viewCtrl._nav.push(AboutPage, {theme: this.factory.appSettings.getValue().theme});
+    setTimeout(()=>{
+      this.viewCtrl.dismiss();
+    }, 500);
   }
 
   changeTheme = (theme: string, themeColor: string) => {

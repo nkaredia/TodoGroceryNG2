@@ -12,6 +12,11 @@
     .bar-buttons-ios[end] {
       width: 110px;
     }
+    .bar-button-ios[more-button] {
+      position: absolute;
+      top: -16px;
+      right: 0;
+    }
   }
   .bar-buttons-ios[end] {
     display: flex;
