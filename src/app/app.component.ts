@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Platform, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Device } from '@ionic-native/device';
@@ -10,7 +10,7 @@ import { DataFactory } from '../providers/dataFactory';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  @ViewChild(Nav) nav: Nav;
+  @ViewChild(NavController) nav: NavController;
   rootPage: any = List;
   currentTheme: string = '';
 
@@ -36,6 +36,12 @@ export class MyApp {
         }
       });
       this.factory.appSettings.subscribe(this.applyTheme);
+      platform.registerBackButtonAction(() => {
+        //alert(this.nav.canGoBack());
+        if (this.nav.canGoBack()) {
+          this.nav.pop();
+        }
+      });
     });
     String.prototype.capitalize = function () {
       return this.charAt(0).toUpperCase() + this.slice(1);

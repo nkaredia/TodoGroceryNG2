@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { DataFactory } from '../../providers/dataFactory';
 import {
-  ViewController
+  ViewController,
+  NavController
 } from 'ionic-angular';
 import { AboutPage } from '../../pages/about/about';
 
@@ -12,14 +13,15 @@ import { AboutPage } from '../../pages/about/about';
 export class Popover {
 
   constructor(private viewCtrl: ViewController,
+    private navCtrl: NavController,
     private factory: DataFactory) {
   }
 
   gotoAbout = () => {
-    this.viewCtrl._nav.push(AboutPage, {theme: this.factory.appSettings.getValue().theme});
-    setTimeout(()=>{
+    setTimeout(() => {
       this.viewCtrl.dismiss();
     }, 500);
+    this.navCtrl.push(AboutPage, { theme: this.factory.appSettings.getValue().theme });
   }
 
   changeTheme = (theme: string, themeColor: string) => {
